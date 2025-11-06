@@ -1,0 +1,4166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHOP | Premium Investment Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #4cc9f0;
+            --accent: #f72585;
+            --dark: #10002b;
+            --darker: #03071e;
+            --light: #f8f9fa;
+            --success: #38b000;
+            --warning: #ff9e00;
+            --danger: #ef233c;
+            --card-bg: rgba(30, 30, 46, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #adb5bd;
+            --glow: 0 0 20px rgba(67, 97, 238, 0.4);
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            --transition: all 0.3s ease;
+            --glass: rgba(16, 18, 27, 0.7);
+            --glass-light: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(67, 97, 238, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(67, 97, 238, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.15;
+        }
+
+        /* Login/Register Container */
+        .auth-container {
+            max-width: 450px;
+            width: 100%;
+            background: var(--glass);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin: 20px auto;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+        }
+        
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 35px 30px;
+            position: relative;
+        }
+        
+        .form-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 25px;
+        }
+        
+        .toggle-btn {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+        
+        .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--glow);
+        }
+        
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        .remember-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .custom-checkbox.checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .custom-checkbox.checked::after {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .checkbox-label {
+            font-size: 15px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .forgot-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+        
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            border: none;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--glow);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to right, #3a56e0, #2f0a9e);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.5);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--secondary);
+            font-weight: 600;
+            border: 2px solid rgba(76, 201, 240, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            width: 8.04%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .divider-text {
+            padding: 0 15px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .footer-links {
+            text-align: center;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 5px;
+        }
+        
+        .form-section {
+            display: none;
+        }
+        
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .password-strength {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .strength-bar {
+            height: 4px;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+        
+        .strength-bar.active {
+            background: var(--primary);
+        }
+        
+        .verification-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .verification-input {
+            flex: 1;
+        }
+        
+        .send-code-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .send-code-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .send-code-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: var(--danger);
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .close-notification {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        
+        .password-match {
+            color: var(--danger);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .reset-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .back-to-login {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--secondary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 100;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        /* Session status indicator */
+        .session-status {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(30, 30, 46, 0.7);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 8px 15px;
+            font-size: 14px;
+            backdrop-filter: blur(5px);
+            z-index: 90;
+        }
+        
+        .session-status.authenticated {
+            border-color: var(--success);
+        }
+        
+        .session-status .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .session-status.authenticated .status-dot {
+            background: var(--success);
+        }
+        
+        .session-status:not(.authenticated) .status-dot {
+            background: var(--text-secondary);
+        }
+
+        /* Main Container */
+        .dashboard-container {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 100px;
+        }
+
+        /* Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: var(--glow);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .user-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .dashboard-btn {
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .dashboard-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+            background: rgba(67, 97, 238, 0.2);
+        }
+
+        .dashboard-btn i {
+            font-size: 18px;
+        }
+
+        .dashboard-btn.recharge {
+            background: linear-gradient(135deg, rgba(56, 176, 0, 0.2), rgba(56, 176, 0, 0.1));
+            border-color: rgba(56, 176, 0, 0.3);
+        }
+
+        .dashboard-btn.withdraw {
+            background: linear-gradient(135deg, rgba(247, 37, 133, 0.2), rgba(247, 37, 133, 0.1));
+            border-color: rgba(247, 37, 133, 0.3);
+        }
+
+        .dashboard-btn.recharge:hover {
+            background: rgba(56, 176, 0, 0.3);
+        }
+
+        .dashboard-btn.withdraw:hover {
+            background: rgba(247, 37, 133, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3), var(--glow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-amount {
+            font-size: 48px;
+            font-weight: 800;
+            margin: 20px 0;
+            text-align: center;
+            color: var(--text-primary);
+            background: linear-gradient(to right, #ffffff, var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(76, 201, 240, 0.2);
+        }
+
+        .balance-label {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .funds-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .fund-box {
+            text-align: center;
+            flex: 1;
+        }
+
+        .fund-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .fund-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .recharge-fund {
+            color: #4cc9f0;
+        }
+
+        .income-fund {
+            color: #38b000;
+        }
+
+        /* Task Card */
+        .task-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.15), rgba(247, 37, 133, 0.15));
+            cursor: pointer;
+        }
+
+        .prize-display {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .prize-amount {
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--secondary);
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
+        }
+
+        .prize-label {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        /* Products Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0 25px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), var(--glow);
+            border-color: var(--primary);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .product-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .product-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-right: 15px;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.2), rgba(247, 37, 133, 0.2));
+            color: var(--primary);
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .product-details {
+            margin: 20px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+        }
+
+        .detail-value {
+            font-weight: 600;
+        }
+
+        .dashboard-progress-container {
+            margin: 20px 0;
+        }
+
+        .dashboard-progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .dashboard-progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .dashboard-progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 5px;
+        }
+
+        .invest-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+
+        .invest-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.5);
+        }
+
+        .invest-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Footer Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-top: 1px solid var(--card-border);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 8px 15px;
+            border-radius: 15px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 5px;
+            transition: var(--transition);
+        }
+
+        .nav-item.active {
+            color: var(--secondary);
+            background: rgba(76, 201, 240, 0.1);
+        }
+
+        .nav-item.active i {
+            color: var(--secondary);
+        }
+
+        .nav-item:hover {
+            color: white;
+        }
+
+        /* Security Badge */
+        .security-badge {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 90;
+            backdrop-filter: blur(5px);
+        }
+
+        .security-badge i {
+            color: var(--secondary);
+        }
+
+        /* Profile Menu */
+        .profile-menu {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100vh;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 30px;
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+            transition: right 0.4s ease;
+            border-left: 1px solid var(--card-border);
+            overflow-y: auto;
+        }
+
+        .profile-menu.active {
+            right: 0;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .profile-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .menu-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .menu-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .menu-action:hover {
+            background: rgba(67, 97, 238, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .menu-action i {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .menu-action span {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .close-menu:hover {
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+
+        /* Bank Modal */
+        .bank-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .bank-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .bank-content {
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.4s ease;
+        }
+
+        .bank-modal.active .bank-content {
+            transform: translateY(0);
+        }
+
+        .bank-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .bank-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .bank-details {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .bank-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .bank-label {
+            width: 150px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .bank-value {
+            flex: 1;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .reference {
+            display: inline-block;
+            background: rgba(76, 201, 240, 0.2);
+            color: var(--secondary);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+        }
+
+        .close-bank {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .close-bank:hover {
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+
+        /* Recharge Amount Input */
+        .recharge-amount-section {
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .amount-error {
+            color: var(--danger);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .proceed-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+
+        .proceed-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            cursor: not-allowed;
+        }
+
+        .proceed-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.5);
+        }
+
+        /* Payment Confirmation */
+        .payment-confirmation {
+            text-align: center;
+            margin: 25px 0;
+            display: none;
+        }
+
+        .paid-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--success), #2e7d32);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+
+        .paid-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 176, 0, 0.5);
+        }
+
+        .countdown {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--secondary);
+            margin: 15px 0;
+        }
+
+        .success-message {
+            background: rgba(56, 176, 0, 0.15);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .success-icon {
+            font-size: 48px;
+            color: var(--success);
+            margin-bottom: 15px;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(30, 30, 46, 0.95);
+            border: 1px solid rgba(76, 201, 240, 0.5);
+            border-radius: 12px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 3000;
+            transform: translateX(120%);
+            transition: transform 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.active {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            font-size: 24px;
+            color: var(--secondary);
+        }
+
+        .toast-content h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .toast-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--danger);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        /* Time Indicator */
+        .time-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(30, 30, 46, 0.7);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 8px 15px;
+            font-size: 14px;
+            backdrop-filter: blur(5px);
+            z-index: 90;
+        }
+
+        .time-indicator .reward-time {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Red Envelope Card */
+        .red-envelope-card {
+            background: linear-gradient(135deg, rgba(239, 35, 60, 0.15), rgba(247, 37, 133, 0.15));
+            margin-bottom: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .envelope-content {
+            padding: 20px;
+        }
+
+        .envelope-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--warning);
+        }
+
+        .receive-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--danger));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .receive-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(247, 37, 133, 0.5);
+        }
+
+        /* Profile Menu List */
+        .menu-list {
+            margin-bottom: 30px;
+        }
+
+        .menu-item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            color: var(--secondary);
+        }
+
+        .menu-item i {
+            margin-right: 15px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .contact-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .contact-text {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .connection-btn {
+            display: inline-block;
+            background: rgba(67, 97, 238, 0.2);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+            border: 1px solid var(--primary);
+        }
+
+        .connection-btn:hover {
+            background: rgba(67, 97, 238, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Updated bottom nav */
+        .nav-item.mine {
+            position: relative;
+        }
+
+        /* Withdraw Modal */
+        .withdraw-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .withdraw-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .withdraw-content {
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.4s ease;
+        }
+
+        .withdraw-modal.active .withdraw-content {
+            transform: translateY(0);
+        }
+
+        .withdraw-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .withdraw-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .close-withdraw {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .close-withdraw:hover {
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+        
+        /* Bank Binding Section */
+        .bank-binding-section {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .bank-binding-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+        
+        .bind-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--accent), var(--danger));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+        
+        .bind-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(247, 37, 133, 0.5);
+        }
+        
+        .bound-bank-details {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .bound-detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .bound-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .bound-value {
+            font-weight: 600;
+        }
+        
+        .bank-locked {
+            color: var(--accent);
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        /* Editable Name */
+        .editable-name {
+            cursor: pointer;
+            position: relative;
+            padding-right: 25px;
+        }
+        
+        .editable-name:hover::after {
+            content: '\f044';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: var(--secondary);
+            font-size: 16px;
+        }
+        
+        .name-input {
+            background: transparent;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+            padding: 5px 10px;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        /* Confirmation Modal */
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .confirmation-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .confirmation-content {
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.4s ease;
+        }
+
+        .confirmation-modal.active .confirmation-content {
+            transform: translateY(0);
+        }
+
+        .confirmation-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .confirmation-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .confirmation-text {
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .confirm-btn, .cancel-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(135deg, var(--success), #2e7d32);
+            color: white;
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 176, 0, 0.5);
+        }
+
+        .cancel-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+        }
+
+        .cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .close-confirmation {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .close-confirmation:hover {
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+
+        /* My Products Section */
+        .my-products-section {
+            margin-top: 40px;
+        }
+
+        .my-products-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 30px;
+        }
+
+        .my-products-header {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .my-products-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .my-product-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid var(--card-border);
+        }
+
+        .my-product-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .my-product-name {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .my-product-price {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .my-product-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .my-product-detail {
+            font-size: 14px;
+        }
+
+        .my-product-label {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .my-product-value {
+            font-weight: 600;
+        }
+
+        .countdown-timer {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+        }
+        
+        /* New Financial Section */
+        .financial-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .financial-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 25px;
+        }
+        
+        .financial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .financial-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .financial-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 10px 0 5px;
+            color: var(--secondary);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .financial-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .financial-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .financial-btn:hover {
+            background: rgba(67, 97, 238, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .financial-products {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .financial-product {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+        }
+        
+        .financial-product-header {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .financial-product-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .financial-detail {
+            font-size: 15px;
+        }
+        
+        .financial-detail-label {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .financial-detail-value {
+            font-weight: 600;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .app-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .user-controls {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .balance-amount {
+                font-size: 36px;
+            }
+            
+            .prize-amount {
+                font-size: 48px;
+            }
+            
+            .profile-menu {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .funds-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .bank-content {
+                padding: 20px;
+            }
+            
+            .dashboard-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .dashboard-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .menu-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .bank-content {
+                padding: 15px;
+            }
+            
+            .auth-container {
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="bg-grid"></div>
+    </div>
+    
+    <!-- Session Status Indicator -->
+    <div class="session-status" id="session-status">
+        <span class="status-dot"></span>
+        <span id="status-text">Not logged in</span>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <div class="notification-content" id="notification-content">Success message</div>
+        <button class="close-notification" id="close-notification">&times;</button>
+    </div>
+    
+    <!-- Auth Container -->
+    <div class="auth-container" id="auth-container">
+        <div class="header">
+            <div class="logo"><i class="fas fa-chart-line"></i></div>
+            <h1>WHOP</h1>
+            <p>Join our premium investment community</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-toggle">
+                <div class="toggle-btn active" data-target="login-form">Login</div>
+                <div class="toggle-btn" data-target="register-form">Register</div>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="form-section active">
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" class="form-control" id="login-phone" placeholder="Enter your phone number" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="login-password" placeholder="Enter your password" required>
+                        <i class="fas fa-eye toggle-password" data-target="login-password"></i>
+                    </div>
+                </div>
+                
+                <div class="remember-row">
+                    <div class="checkbox-container">
+                        <div class="custom-checkbox checked" id="remember-checkbox"></div>
+                        <span class="checkbox-label">Remember me</span>
+                    </div>
+                    <a href="#" class="forgot-link" id="forgot-password-link">Forgot password?</a>
+                </div>
+                
+                <button class="btn btn-primary" id="login-btn">Login to Account</button>
+                
+                <div class="footer-links">
+                    Don't have an account? <a href="#" class="switch-form" data-target="register-form">Sign up</a>
+                </div>
+            </div>
+            
+            <!-- Registration Form -->
+            <div id="register-form" class="form-section">
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" class="form-control" id="phone-number" placeholder="Enter your phone number" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="reg-password" placeholder="Create a password" required>
+                        <i class="fas fa-eye toggle-password" data-target="reg-password"></i>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="reg-confirm-password" placeholder="Confirm your password" required>
+                        <i class="fas fa-eye toggle-password" data-target="reg-confirm-password"></i>
+                    </div>
+                    <div class="password-match" id="password-match">Passwords do not match!</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Verification Code</label>
+                    <div class="verification-container">
+                        <div class="input-with-icon verification-input">
+                            <i class="fas fa-shield-alt input-icon"></i>
+                            <input type="text" class="form-control" id="verification-code" placeholder="Enter verification code" required>
+                        </div>
+                        <button class="send-code-btn" id="send-code-btn">Send Code</button>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Verification progress</span>
+                        <span id="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Invitation Code (Optional)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-gift input-icon"></i>
+                        <input type="text" class="form-control" id="invitation-code" placeholder="Enter invitation code">
+                    </div>
+                </div>
+                
+                <div class="checkbox-container" style="margin: 20px 0;">
+                    <div class="custom-checkbox checked" id="terms-checkbox"></div>
+                    <span class="checkbox-label">I agree to the <a href="#" style="color: var(--secondary); text-decoration: none;">Terms of Service</a> and <a href="#" style="color: var(--secondary); text-decoration: none;">Privacy Policy</a></span>
+                </div>
+                
+                <button class="btn btn-primary" id="register-btn">Create Account</button>
+                
+                <div class="footer-links">
+                    Already have an account? <a href="#" class="switch-form" data-target="login-form">Sign in</a>
+                </div>
+            </div>
+            
+            <!-- Password Reset Form -->
+            <div id="reset-password-form" class="form-section">
+                <h2 class="reset-title">Reset Your Password</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" class="form-control" id="reset-phone" placeholder="Enter your registered phone number" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Verification Code</label>
+                    <div class="verification-container">
+                        <div class="input-with-icon verification-input">
+                            <i class="fas fa-shield-alt input-icon"></i>
+                            <input type="text" class="form-control" id="reset-verification-code" placeholder="Enter verification code" required>
+                        </div>
+                        <button class="send-code-btn" id="reset-send-code-btn">Send Code</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="new-password" placeholder="Create a new password" required>
+                        <i class="fas fa-eye toggle-password" data-target="new-password"></i>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="confirm-new-password" placeholder="Confirm your new password" required>
+                        <i class="fas fa-eye toggle-password" data-target="confirm-new-password"></i>
+                    </div>
+                    <div class="password-match" id="new-password-match">Passwords do not match!</div>
+                </div>
+                
+                <button class="btn btn-primary" id="reset-password-btn">Reset Password</button>
+                
+                <a href="#" class="back-to-login switch-form" data-target="login-form">
+                    <i class="fas fa-arrow-left"></i> Back to Login
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container" id="dashboard-container">
+        <!-- Time Indicator -->
+        <div class="time-indicator">
+            Rewards available: <span class="reward-time">18:00 - 18:30</span>
+        </div>
+
+        <!-- Notification Toast -->
+        <div class="toast" id="toast">
+            <i class="fas fa-gift toast-icon"></i>
+            <div class="toast-content">
+                <h4>Reward Received!</h4>
+                <p>You earned <span id="reward-amount">R 0.00</span></p>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="confirmation-modal" id="confirmation-modal">
+            <div class="confirmation-content">
+                <div class="close-confirmation" id="close-confirmation">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="confirmation-header">
+                    <h2>Confirm Purchase</h2>
+                </div>
+                <div class="confirmation-text" id="confirmation-text">
+                    Are you sure you want to purchase WHOP1 for R300?
+                </div>
+                <div class="confirmation-buttons">
+                    <button class="cancel-btn" id="cancel-purchase">Cancel</button>
+                    <button class="confirm-btn" id="confirm-purchase">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="logo">
+                    <div class="logo-icon floating">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="logo-text">WHOP</div>
+                </div>
+                
+                <div class="user-controls">
+                    <button class="dashboard-btn withdraw" id="withdraw-btn">
+                        <i class="fas fa-money-bill-wave"></i>
+                        Withdraw
+                    </button>
+                    <button class="dashboard-btn recharge" id="recharge-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        Recharge
+                    </button>
+                    <button class="dashboard-btn" id="profile-btn">
+                        <i class="fas fa-user"></i>
+                        Profile
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard -->
+            <div class="dashboard">
+                <!-- Balance Card -->
+                <div class="card balance-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Account Balance</div>
+                            <div class="card-subtitle">Your available funds</div>
+                        </div>
+                        <i class="fas fa-shield-alt" style="color: var(--secondary); font-size: 24px;"></i>
+                    </div>
+                    
+                    <div class="balance-amount" id="balance-amount">R 0.00</div>
+                    <div class="balance-label">Available Balance</div>
+                    
+                    <div class="funds-container">
+                        <div class="fund-box">
+                            <div class="fund-label">Total Recharge</div>
+                            <div class="fund-value recharge-fund" id="recharge-fund">R 0.00</div>
+                        </div>
+                        <div class="fund-box">
+                            <div class="fund-label">Total Income</div>
+                            <div class="fund-value income-fund" id="income-fund">R 0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Task Card -->
+                <div class="card task-card" id="task-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Earn Rewards</div>
+                            <div class="card-subtitle">Complete tasks to win cash prizes</div>
+                        </div>
+                        <i class="fas fa-gift" style="color: var(--accent); font-size: 24px;"></i>
+                    </div>
+                    
+                    <div class="prize-display">
+                        <div class="prize-label">Complete Task to Win</div>
+                        <div class="prize-amount">R 1000</div>
+                        <div class="card-subtitle">Current Prize Pool</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Red Envelope Card -->
+            <div class="card red-envelope-card" id="red-envelope">
+                <div class="envelope-content">
+                    <p class="envelope-text">Click to receive red envelope cash rewards</p>
+                    <div class="receive-btn">Receive <i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+
+            <!-- My Products Section -->
+            <div class="my-products-section" id="my-products-section">
+                <div class="card my-products-card">
+                    <div class="my-products-header">My Products</div>
+                    <div class="my-products-list" id="my-products-list">
+                        <div class="no-products">No content yet!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Section -->
+            <div class="financial-section" id="financial-section">
+                <div class="financial-card">
+                    <div class="financial-header">
+                        <div class="financial-title">My Products</div>
+                    </div>
+                    
+                    <div class="financial-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Accumulated income</div>
+                            <div class="stat-value" id="accumulated-income">R0.00</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Today's income</div>
+                            <div class="stat-value" id="today-income">R0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Number of investments</div>
+                            <div class="stat-value" id="investment-count">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="financial-actions">
+                        <div class="financial-btn" id="financial-recharge">Recharge</div>
+                        <div class="financial-btn" id="financial-withdraw">Withdraw</div>
+                        <div class="financial-btn" id="financial-details">Details</div>
+                    </div>
+                    
+                    <div class="financial-products" id="financial-products-list">
+                        <!-- Products will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div class="section-header">
+                <div class="section-title">Investment Products</div>
+                <div class="card-subtitle">Grow your wealth with our premium options</div>
+            </div>
+
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-badge">Most Popular</div>
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div>
+                            <div class="product-name">WHOP1</div>
+                            <div class="product-price">R 300</div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Earnings Duration:</div>
+                            <div class="detail-value">66 days</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Daily Income:</div>
+                            <div class="detail-value">R 50.00</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Total Income:</div>
+                            <div class="detail-value">R 3300.00</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-progress-container">
+                        <div class="dashboard-progress-label">
+                            <span>Daily Stock:</span>
+                            <span>67/300</span>
+                        </div>
+                        <div class="dashboard-progress-bar">
+                            <div class="dashboard-progress-fill" style="width: 22%"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="invest-btn" data-product="WHOP1" data-price="300" data-daily="50">Invest Now</button>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-badge">Limited</div>
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div>
+                            <div class="product-name">WHOP2</div>
+                            <div class="product-price">R 600</div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Earnings Duration:</div>
+                            <div class="detail-value">66 days</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Daily Income:</div>
+                            <div class="detail-value">R 138.00</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Total Income:</div>
+                            <div class="detail-value">R 9108.00</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-progress-container">
+                        <div class="dashboard-progress-label">
+                            <span>Daily Stock:</span>
+                            <span>20/300</span>
+                        </div>
+                        <div class="dashboard-progress-bar">
+                            <div class="dashboard-progress-fill" style="width: 7%"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="invest-btn" data-product="WHOP2" data-price="600" data-daily="138">Invest Now</button>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <div>
+                            <div class="product-name">WHOP3</div>
+                            <div class="product-price">R 1200</div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Earnings Duration:</div>
+                            <div class="detail-value">66 days</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Daily Income:</div>
+                            <div class="detail-value">R 328.00</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Total Income:</div>
+                            <div class="detail-value">R 21648.00</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-progress-container">
+                        <div class="dashboard-progress-label">
+                            <span>Daily Stock:</span>
+                            <span>9/300</span>
+                        </div>
+                        <div class="dashboard-progress-bar">
+                            <div class="dashboard-progress-fill" style="width: 3%"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="invest-btn" data-product="WHOP3" data-price="1200" data-daily="328">Invest Now</button>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-badge">Premium</div>
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <div>
+                            <div class="product-name">WHOP4</div>
+                            <div class="product-price">R 3000</div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Earnings Duration:</div>
+                            <div class="detail-value">66 days</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Daily Income:</div>
+                            <div class="detail-value">R 800.00</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Total Income:</div>
+                            <div class="detail-value">R 52800.00</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-progress-container">
+                        <div class="dashboard-progress-label">
+                            <span>Daily Stock:</span>
+                            <span>2/200</span>
+                        </div>
+                        <div class="dashboard-progress-bar">
+                            <div class="dashboard-progress-fill" style="width: 1%"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="invest-btn" data-product="WHOP4" data-price="3000" data-daily="800">Invest Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Badge -->
+        <div class="security-badge">
+            <i class="fas fa-lock"></i>
+            <span>Secure Connection • 256-bit Encryption</span>
+        </div>
+
+        <!-- Profile Menu -->
+        <div class="profile-menu" id="profile-menu">
+            <div class="close-menu" id="close-menu">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <h3 class="editable-name" id="user-name">John Doe</h3>
+                    <p>Premium Member</p>
+                </div>
+            </div>
+            
+            <!-- Profile Menu List -->
+            <div class="menu-list">
+                <div class="menu-item">
+                    <i class="fas fa-key"></i>
+                    Password
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-info-circle"></i>
+                    About us
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-tasks"></i>
+                    Task
+                </div>
+                <div class="menu-item" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Log out
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-download"></i>
+                    Download
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Account Information</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Member ID:</div>
+                    <div class="detail-value">#USR-123456</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Account Level:</div>
+                    <div class="detail-value">Silver</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Join Date:</div>
+                    <div class="detail-value">2023-10-15</div>
+                </div>
+            </div>
+            
+            <!-- Contact Customer Service Section -->
+            <div class="contact-section">
+                <div class="contact-title">Contact Customer Service</div>
+                <p class="contact-text">If you encounter problems, please contact us as soon as possible</p>
+                <a href="#" class="connection-btn">Connection</a>
+            </div>
+        </div>
+
+        <!-- Bank Modal -->
+        <div class="bank-modal" id="bank-modal">
+            <div class="bank-content">
+                <div class="close-bank" id="close-bank">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="bank-header">
+                    <h2>Recharge Instructions</h2>
+                    <p>Use the following details to recharge your account</p>
+                </div>
+                
+                <div class="bank-details">
+                    <div class="bank-row">
+                        <div class="bank-label">Receipt Name:</div>
+                        <div class="bank-value">WHOP</div>
+                    </div>
+                    <div class="bank-row">
+                        <div class="bank-label">Bank Name:</div>
+                        <div class="bank-value">TYMEBANK BUSINESS</div>
+                    </div>
+                    <div class="bank-row">
+                        <div class="bank-label">Account Number:</div>
+                        <div class="bank-value">53002770920</div>
+                    </div>
+                    <div class="bank-row">
+                        <div class="bank-label">Reference:</div>
+                        <div class="bank-value"><span class="reference" id="reference-code">ABCD12</span></div>
+                    </div>
+                </div>
+                
+                <!-- Recharge Amount Section -->
+                <div class="recharge-amount-section">
+                    <input type="number" id="recharge-amount" class="amount-input" placeholder="Enter amount (minimum R300)" min="300">
+                    <div class="amount-error" id="amount-error">Minimum amount is R300</div>
+                    <button class="proceed-btn" id="proceed-btn" disabled>PROCEED</button>
+                </div>
+                
+                <!-- Payment Confirmation -->
+                <div class="payment-confirmation" id="payment-confirmation">
+                    <button class="paid-btn" id="paid-btn">
+                        <i class="fas fa-check-circle"></i> I HAVE PAID
+                    </button>
+                    <div class="countdown" id="countdown">Please wait for payment confirmation...</div>
+                    <div class="success-message" id="success-message">
+                        <i class="fas fa-check-circle success-icon"></i>
+                        <h3>Recharge Successful!</h3>
+                        <p id="success-amount">R 0.00 has been added to your Recharge Funds</p>
+                    </div>
+                </div>
+                
+                <button class="invest-btn" style="margin-top: 20px;" id="copy-reference">
+                    <i class="fas fa-copy"></i> Copy Reference
+                </button>
+            </div>
+        </div>
+
+        <!-- Withdraw Modal -->
+        <div class="withdraw-modal" id="withdraw-modal">
+            <div class="withdraw-content">
+                <div class="close-withdraw" id="close-withdraw">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="withdraw-header">
+                    <h2>Withdraw Funds</h2>
+                    <p>Bank Transfer Only</p>
+                </div>
+                
+                <!-- Bank Binding Section -->
+                <div class="bank-binding-section" id="bank-binding-section">
+                    <div class="bank-binding-form" id="bank-binding-form">
+                        <div class="form-group">
+                            <label class="form-label">Name:</label>
+                            <input type="text" class="form-input" id="bank-name-input" placeholder="Your full name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Bank Name:</label>
+                            <select class="form-select" id="bank-select">
+                                <option value="">Select your bank</option>
+                                <option value="CAPITEC">CAPITEC</option>
+                                <option value="TYMEBANK">TYMEBANK</option>
+                                <option value="STD">STD</option>
+                                <option value="ABSA">ABSA</option>
+                                <option value="NEDBANK">NEDBANK</option>
+                                <option value="FNB">FNB</option>
+                                <option value="MUKURU">MUKURU</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Account Number:</label>
+                            <input type="text" class="form-input" id="account-number-input" placeholder="Your account number">
+                        </div>
+                        <button class="bind-btn" id="bind-btn">BIND BANK ACCOUNT</button>
+                    </div>
+                    
+                    <div class="bound-bank-details" id="bound-bank-details">
+                        <div class="bound-detail-row">
+                            <div class="bound-label">Account Holder:</div>
+                            <div class="bound-value" id="bound-name"></div>
+                        </div>
+                        <div class="bound-detail-row">
+                            <div class="bound-label">Bank Name:</div>
+                            <div class="bound-value" id="bound-bank"></div>
+                        </div>
+                        <div class="bound-detail-row">
+                            <div class="bound-label">Account Number:</div>
+                            <div class="bound-value" id="bound-account"></div>
+                        </div>
+                        <div class="bank-locked">
+                            <i class="fas fa-lock"></i> Bank account is permanently bound and cannot be changed
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Withdrawal Form -->
+                <div class="recharge-amount-section" id="withdraw-amount-section">
+                    <input type="number" id="withdraw-amount" class="amount-input" placeholder="Enter withdrawal amount" min="50">
+                    <div class="amount-error" id="withdraw-error">Minimum withdrawal is R50</div>
+                    <button class="proceed-btn" id="withdraw-proceed-btn">WITHDRAW</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" id="home-tab">
+                <i class="fas fa-home"></i>
+                Home
+            </div>
+            <div class="nav-item" id="products-tab">
+                <i class="fas fa-box-open"></i>
+                Product
+            </div>
+            <div class="nav-item" id="financial-tab">
+                <i class="fas fa-chart-line"></i>
+                Financial
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-users"></i>
+                Team
+            </div>
+            <div class="nav-item mine" id="mine-tab">
+                <i class="fas fa-user"></i>
+                Mine
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Button -->
+    <a href="https://chat.whatsapp.com/G04wbaCgJMME043SjqOjMM?mode=wwt" class="whatsapp-button" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // User storage using localStorage
+        const USER_STORAGE_KEY = "whop_users";
+        const CURRENT_USER_KEY = "current_user";
+        const SESSION_EXPIRY_KEY = "session_expiry";
+        
+        // Initialize users array
+        let users = JSON.parse(localStorage.getItem(USER_STORAGE_KEY)) || [];
+        
+        // Current verification codes
+        let currentVerificationCode = null;
+        let resetVerificationCode = null;
+        
+        // Initialize balances
+        let rechargeBalance = 0;
+        let incomeBalance = 0;
+        let totalBalance = 0;
+        let accumulatedIncome = 0;
+        let todayIncome = 0;
+        let investmentCount = 0;
+        
+        // Bank binding state
+        let bankBound = false;
+        let bankDetails = {};
+        
+        // Current product being purchased
+        let currentProduct = null;
+        let currentPrice = 0;
+        let currentDailyIncome = 0;
+        
+        // User's purchased products
+        let userProducts = [];
+        
+        // DOM elements
+        const authContainer = document.getElementById('auth-container');
+        const dashboardContainer = document.getElementById('dashboard-container');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        // Check if user is already logged in
+        function checkExistingSession() {
+            const currentUser = JSON.parse(sessionStorage.getItem(CURRENT_USER_KEY));
+            const expiryTime = sessionStorage.getItem(SESSION_EXPIRY_KEY);
+            
+            if (currentUser && expiryTime && new Date().getTime() < parseInt(expiryTime)) {
+                // Valid session exists, show dashboard
+                showDashboard(currentUser.phone);
+                return true;
+            } else {
+                // Clear expired session
+                sessionStorage.removeItem(CURRENT_USER_KEY);
+                sessionStorage.removeItem(SESSION_EXPIRY_KEY);
+                updateSessionStatus(false);
+                return false;
+            }
+        }
+        
+        // Show dashboard and hide auth
+        function showDashboard(phone) {
+            authContainer.style.display = 'none';
+            dashboardContainer.style.display = 'block';
+            updateSessionStatus(true, phone);
+            updateBalances();
+            updateFinancialStats();
+            renderUserProducts();
+        }
+        
+        // Show auth and hide dashboard
+        function showAuth() {
+            authContainer.style.display = 'block';
+            dashboardContainer.style.display = 'none';
+            updateSessionStatus(false);
+        }
+        
+        // Update session status display
+        function updateSessionStatus(isAuthenticated, phone = "") {
+            const statusElement = document.getElementById("session-status");
+            const statusText = document.getElementById("status-text");
+            
+            if (isAuthenticated) {
+                statusElement.classList.add("authenticated");
+                statusText.textContent = `Logged in as: ${phone}`;
+            } else {
+                statusElement.classList.remove("authenticated");
+                statusText.textContent = "Not logged in";
+            }
+        }
+        
+        // Initialize session check
+        document.addEventListener("DOMContentLoaded", function() {
+            checkExistingSession();
+        });
+        
+        // Logout functionality
+        logoutBtn.addEventListener('click', function() {
+            sessionStorage.removeItem(CURRENT_USER_KEY);
+            sessionStorage.removeItem(SESSION_EXPIRY_KEY);
+            showAuth();
+        });
+        
+        // Toggle between forms
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Hide all forms
+                document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
+                // Show target form
+                const targetForm = this.getAttribute('data-target');
+                document.getElementById(targetForm).classList.add('active');
+            });
+        });
+        
+        // Switch form from links
+        document.querySelectorAll('.switch-form').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetForm = this.getAttribute('data-target');
+                
+                // Update toggle buttons
+                document.querySelectorAll('.toggle-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if(btn.getAttribute('data-target') === targetForm) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Hide all forms
+                document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
+                // Show target form
+                document.getElementById(targetForm).classList.add('active');
+            });
+        });
+        
+        // Forgot password link
+        document.getElementById('forgot-password-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Hide all forms
+            document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
+            
+            // Show reset password form
+            document.getElementById('reset-password-form').classList.add('active');
+            
+            // Hide toggle buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.style.display = 'none';
+            });
+        });
+        
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                const input = document.getElementById(target);
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                
+                // Toggle eye icon
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+        
+        // Toggle checkboxes
+        document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+            });
+        });
+        
+        // Password strength indicator
+        const passwordInput = document.getElementById('reg-password');
+        const strengthBars = document.querySelectorAll('#register-form .strength-bar');
+        
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                if (password.length > 0) strength += 1;
+                if (password.length >= 8) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                // Update strength bars
+                strengthBars.forEach((bar, index) => {
+                    if (index < strength) {
+                        bar.classList.add('active');
+                    } else {
+                        bar.classList.remove('active');
+                    }
+                });
+                
+                // Check password match
+                checkPasswordMatch();
+            });
+        }
+        
+        // New password strength indicator
+        const newPasswordInput = document.getElementById('new-password');
+        const newStrengthBars = document.querySelectorAll('#reset-password-form .strength-bar');
+        
+        if (newPasswordInput) {
+            newPasswordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                if (password.length > 0) strength += 1;
+                if (password.length >= 8) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                // Update strength bars
+                newStrengthBars.forEach((bar, index) => {
+                    if (index < strength) {
+                        bar.classList.add('active');
+                    } else {
+                        bar.classList.remove('active');
+                    }
+                });
+                
+                // Check password match
+                checkNewPasswordMatch();
+            });
+        }
+        
+        // Check password match
+        function checkPasswordMatch() {
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+            const passwordMatch = document.getElementById('password-match');
+            
+            if (password && confirmPassword && password !== confirmPassword) {
+                passwordMatch.style.display = 'block';
+                return false;
+            } else {
+                passwordMatch.style.display = 'none';
+                return true;
+            }
+        }
+        
+        // Check new password match
+        function checkNewPasswordMatch() {
+            const password = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
+            const passwordMatch = document.getElementById('new-password-match');
+            
+            if (password && confirmPassword && password !== confirmPassword) {
+                passwordMatch.style.display = 'block';
+                return false;
+            } else {
+                passwordMatch.style.display = 'none';
+                return true;
+            }
+        }
+        
+        // Confirm password match check
+        if (document.getElementById('reg-confirm-password')) {
+            document.getElementById('reg-confirm-password').addEventListener('input', checkPasswordMatch);
+        }
+        
+        if (document.getElementById('confirm-new-password')) {
+            document.getElementById('confirm-new-password').addEventListener('input', checkNewPasswordMatch);
+        }
+        
+        // Verification code functionality
+        const sendCodeBtn = document.getElementById('send-code-btn');
+        const phoneNumberInput = document.getElementById('phone-number');
+        const verificationCodeInput = document.getElementById('verification-code');
+        
+        if (sendCodeBtn) {
+            sendCodeBtn.addEventListener('click', function() {
+                if (!phoneNumberInput.value) {
+                    showNotification('Please enter your phone number first', 'error');
+                    return;
+                }
+                
+                // Check if phone number is already registered
+                const phone = phoneNumberInput.value;
+                const existingUser = users.find(user => user.phone === phone);
+                if (existingUser) {
+                    showNotification('This phone number is already registered', 'error');
+                    return;
+                }
+                
+                // Disable button for 60 seconds
+                this.disabled = true;
+                let seconds = 60;
+                const originalText = this.textContent;
+                
+                const countdown = setInterval(() => {
+                    this.textContent = `Resend (${seconds}s)`;
+                    seconds--;
+                    
+                    if (seconds < 0) {
+                        clearInterval(countdown);
+                        this.textContent = 'Send Code';
+                        this.disabled = false;
+                    }
+                }, 1000);
+                
+                // Generate random 4-digit code
+                currentVerificationCode = Math.floor(1000 + Math.random() * 9000);
+                
+                // Show notification with the code
+                showNotification(`Verification code sent: ${currentVerificationCode}`);
+                
+                // Update progress
+                updateProgress(25);
+            });
+        }
+        
+        // Reset password verification code
+        const resetSendCodeBtn = document.getElementById('reset-send-code-btn');
+        const resetPhoneInput = document.getElementById('reset-phone');
+        
+        if (resetSendCodeBtn) {
+            resetSendCodeBtn.addEventListener('click', function() {
+                if (!resetPhoneInput.value) {
+                    showNotification('Please enter your phone number first', 'error');
+                    return;
+                }
+                
+                // Check if phone number is registered
+                const phone = resetPhoneInput.value;
+                const existingUser = users.find(user => user.phone === phone);
+                if (!existingUser) {
+                    showNotification('Phone number not registered. Please sign up first.', 'error');
+                    return;
+                }
+                
+                // Disable button for 60 seconds
+                this.disabled = true;
+                let seconds = 60;
+                const originalText = this.textContent;
+                
+                const countdown = setInterval(() => {
+                    this.textContent = `Resend (${seconds}s)`;
+                    seconds--;
+                    
+                    if (seconds < 0) {
+                        clearInterval(countdown);
+                        this.textContent = 'Send Code';
+                        this.disabled = false;
+                    }
+                }, 1000);
+                
+                // Generate random 4-digit code
+                resetVerificationCode = Math.floor(1000 + Math.random() * 9000);
+                
+                // Show notification with the code
+                showNotification(`Verification code sent: ${resetVerificationCode}`);
+            });
+        }
+        
+        // Progress update function
+        function updateProgress(percentage) {
+            const progressFill = document.getElementById('progress-fill');
+            const progressPercentage = document.getElementById('progress-percentage');
+            
+            if (!progressFill || !progressPercentage) return;
+            
+            // Ensure percentage is between 0 and 100
+            percentage = Math.max(0, Math.min(100, percentage));
+            
+            progressFill.style.width = `${percentage}%`;
+            progressPercentage.textContent = `${percentage.toFixed(2)}%`;
+            
+            // Change color based on percentage
+            if (percentage < 30) {
+                progressFill.style.background = '#ff6a00';
+            } else if (percentage < 70) {
+                progressFill.style.background = 'linear-gradient(to right, var(--primary), var(--accent))';
+            } else {
+                progressFill.style.background = 'linear-gradient(to right, #00c853, #5efc82)';
+            }
+        }
+        
+        // Update progress as user fills out form
+        const formInputs = document.querySelectorAll('#register-form input:not(#invitation-code)');
+        formInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                // Calculate how many fields are filled
+                let filledCount = 0;
+                formInputs.forEach(field => {
+                    if (field.value.trim() !== '') {
+                        filledCount++;
+                    }
+                });
+                
+                // Calculate percentage (each field contributes equally)
+                const percentage = (filledCount / formInputs.length) * 100;
+                updateProgress(percentage);
+            });
+        });
+        
+        // Registration functionality
+        document.getElementById('register-btn').addEventListener('click', function() {
+            const phone = document.getElementById('phone-number').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+            const verificationCode = document.getElementById('verification-code').value;
+            const invitationCode = document.getElementById('invitation-code').value;
+            const termsChecked = document.getElementById('terms-checkbox').classList.contains('checked');
+            
+            // Validate inputs
+            if (!phone) {
+                showNotification('Please enter your phone number', 'error');
+                return;
+            }
+            
+            if (!password) {
+                showNotification('Please create a password', 'error');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showNotification('Password must be at least 8 characters', 'error');
+                return;
+            }
+            
+            if (!checkPasswordMatch()) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+            
+            if (!verificationCode) {
+                showNotification('Please enter verification code', 'error');
+                return;
+            }
+            
+            if (!termsChecked) {
+                showNotification('Please agree to the Terms of Service', 'error');
+                return;
+            }
+            
+            // Check if phone number is already registered
+            const existingUser = users.find(user => user.phone === phone);
+            if (existingUser) {
+                showNotification('This phone number is already registered', 'error');
+                return;
+            }
+            
+            // Verify code
+            if (verificationCode !== currentVerificationCode?.toString()) {
+                showNotification('Invalid verification code', 'error');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                phone: phone,
+                password: password,
+                accountLevel: 'Basic',
+                registrationDate: new Date().toISOString(),
+                invitationCode: invitationCode || null
+            };
+            
+            // Add to users array
+            users.push(newUser);
+            
+            // Save to localStorage
+            localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
+            
+            // Show success message
+            showNotification('Account created successfully! Please login.');
+            
+            // Switch to login form
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('data-target') === 'login-form') {
+                    btn.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
+            document.getElementById('login-form').classList.add('active');
+            
+            // Reset form
+            document.getElementById('phone-number').value = '';
+            document.getElementById('reg-password').value = '';
+            document.getElementById('reg-confirm-password').value = '';
+            document.getElementById('verification-code').value = '';
+            document.getElementById('invitation-code').value = '';
+            document.getElementById('terms-checkbox').classList.remove('checked');
+        });
+        
+        // Login functionality
+        document.getElementById('login-btn').addEventListener('click', function() {
+            const phone = document.getElementById('login-phone').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Validate inputs
+            if (!phone) {
+                showNotification('Please enter your phone number', 'error');
+                return;
+            }
+            
+            if (!password) {
+                showNotification('Please enter your password', 'error');
+                return;
+            }
+            
+            // Find user
+            const user = users.find(u => u.phone === phone && u.password === password);
+            
+            if (!user) {
+                showNotification('Invalid phone number or password', 'error');
+                return;
+            }
+            
+            // Show success message
+            showNotification('Login successful!');
+            
+            // Store current user in session with 24-hour expiry
+            const expiryTime = new Date().getTime() + (24 * 60 * 60 * 1000); // 24 hours
+            sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+            sessionStorage.setItem(SESSION_EXPIRY_KEY, expiryTime.toString());
+            
+            // Show dashboard
+            showDashboard(user.phone);
+        });
+        
+        // Reset password functionality
+        document.getElementById('reset-password-btn').addEventListener('click', function() {
+            const phone = document.getElementById('reset-phone').value;
+            const verificationCode = document.getElementById('reset-verification-code').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+            
+            // Validate inputs
+            if (!phone) {
+                showNotification('Please enter your phone number', 'error');
+                return;
+            }
+            
+            if (!verificationCode) {
+                showNotification('Please enter verification code', 'error');
+                return;
+            }
+            
+            if (!newPassword) {
+                showNotification('Please create a new password', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                showNotification('Password must be at least 8 characters', 'error');
+                return;
+            }
+            
+            if (!checkNewPasswordMatch()) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+            
+            // Find user
+            const userIndex = users.findIndex(u => u.phone === phone);
+            
+            if (userIndex === -1) {
+                showNotification('Phone number not registered', 'error');
+                return;
+            }
+            
+            // Verify code
+            if (verificationCode !== resetVerificationCode?.toString()) {
+                showNotification('Invalid verification code', 'error');
+                return;
+            }
+            
+            // Update password
+            users[userIndex].password = newPassword;
+            
+            // Save to localStorage
+            localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
+            
+            // Show success message
+            showNotification('Password reset successfully! Please login with your new password.');
+            
+            // Switch to login form
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('data-target') === 'login-form') {
+                    btn.classList.add('active');
+                }
+                btn.style.display = 'flex';
+            });
+            
+            document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
+            document.getElementById('login-form').classList.add('active');
+            
+            // Reset form
+            document.getElementById('reset-phone').value = '';
+            document.getElementById('reset-verification-code').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-new-password').value = '';
+        });
+        
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationContent = document.getElementById('notification-content');
+            
+            notificationContent.textContent = message;
+            
+            // Set icon based on type
+            const icon = notification.querySelector('i');
+            if (type === 'error') {
+                notification.classList.add('error');
+                icon.className = 'fas fa-exclamation-circle';
+            } else {
+                notification.classList.remove('error');
+                icon.className = 'fas fa-check-circle';
+            }
+            
+            notification.classList.add('show');
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Close notification
+        document.getElementById('close-notification').addEventListener('click', function() {
+            document.getElementById('notification').classList.remove('show');
+        });
+
+        // Dashboard functionality
+        // DOM elements for dashboard
+        const profileBtn = document.getElementById('profile-btn');
+        const mineTab = document.getElementById('mine-tab');
+        const profileMenu = document.getElementById('profile-menu');
+        const closeMenu = document.getElementById('close-menu');
+        const bankModal = document.getElementById('bank-modal');
+        const closeBank = document.getElementById('close-bank');
+        const referenceCode = document.getElementById('reference-code');
+        const copyBtn = document.getElementById('copy-reference');
+        const rechargeAmountInput = document.getElementById('recharge-amount');
+        const amountError = document.getElementById('amount-error');
+        const proceedBtn = document.getElementById('proceed-btn');
+        const paymentConfirmation = document.getElementById('payment-confirmation');
+        const paidBtn = document.getElementById('paid-btn');
+        const countdownDisplay = document.getElementById('countdown');
+        const successMessage = document.getElementById('success-message');
+        const successAmount = document.getElementById('success-amount');
+        const taskCard = document.getElementById('task-card');
+        const redEnvelope = document.getElementById('red-envelope');
+        const toast = document.getElementById('toast');
+        const rewardAmount = document.getElementById('reward-amount');
+        const rechargeBtn = document.getElementById('recharge-btn');
+        const withdrawBtn = document.getElementById('withdraw-btn');
+        const withdrawModal = document.getElementById('withdraw-modal');
+        const closeWithdraw = document.getElementById('close-withdraw');
+        const balanceAmount = document.getElementById('balance-amount');
+        const rechargeFund = document.getElementById('recharge-fund');
+        const incomeFund = document.getElementById('income-fund');
+        const bankBindingSection = document.getElementById('bank-binding-section');
+        const bankBindingForm = document.getElementById('bank-binding-form');
+        const boundBankDetails = document.getElementById('bound-bank-details');
+        const bindBtn = document.getElementById('bind-btn');
+        const withdrawAmountSection = document.getElementById('withdraw-amount-section');
+        const userName = document.getElementById('user-name');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const closeConfirmation = document.getElementById('close-confirmation');
+        const cancelPurchaseBtn = document.getElementById('cancel-purchase');
+        const confirmPurchaseBtn = document.getElementById('confirm-purchase');
+        const confirmationText = document.getElementById('confirmation-text');
+        const myProductsList = document.getElementById('my-products-list');
+        const homeTab = document.getElementById('home-tab');
+        const productsTab = document.getElementById('products-tab');
+        const financialTab = document.getElementById('financial-tab');
+        const myProductsSection = document.getElementById('my-products-section');
+        const productsGrid = document.querySelector('.products-grid');
+        const sectionHeader = document.querySelector('.section-header');
+        const financialSection = document.getElementById('financial-section');
+        const accumulatedIncomeEl = document.getElementById('accumulated-income');
+        const todayIncomeEl = document.getElementById('today-income');
+        const investmentCountEl = document.getElementById('investment-count');
+        const financialProductsList = document.getElementById('financial-products-list');
+        const financialRechargeBtn = document.getElementById('financial-recharge');
+        const financialWithdrawBtn = document.getElementById('financial-withdraw');
+        const financialDetailsBtn = document.getElementById('financial-details');
+        
+        // Update balance displays
+        function updateBalances() {
+            totalBalance = incomeBalance; // Only income balance affects available balance
+            balanceAmount.textContent = `R ${totalBalance.toFixed(2)}`;
+            rechargeFund.textContent = `R ${rechargeBalance.toFixed(2)}`;
+            incomeFund.textContent = `R ${incomeBalance.toFixed(2)}`;
+        }
+        
+        // Update financial stats
+        function updateFinancialStats() {
+            accumulatedIncomeEl.textContent = `R${accumulatedIncome.toFixed(2)}`;
+            todayIncomeEl.textContent = `R${todayIncome}`;
+            investmentCountEl.textContent = userProducts.length;
+        }
+        
+        // Render user's products
+        function renderUserProducts() {
+            if (userProducts.length === 0) {
+                myProductsList.innerHTML = '<div class="no-products">No content yet!</div>';
+                return;
+            }
+            
+            myProductsList.innerHTML = '';
+            
+            userProducts.forEach(product => {
+                const now = new Date();
+                const lastPayout = new Date(product.lastPayout);
+                const nextPayout = new Date(lastPayout.getTime() + 24 * 60 * 60 * 1000);
+                const timeLeft = nextPayout - now;
+                
+                // Calculate hours and minutes remaining
+                const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
+                const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                
+                // Format countdown display
+                let countdownText = '';
+                if (timeLeft > 0) {
+                    countdownText = `${hoursLeft}h ${minutesLeft}m`;
+                } else {
+                    countdownText = 'Ready to claim!';
+                }
+                
+                const daysLeft = Math.max(0, product.duration - product.daysCompleted);
+                
+                const productEl = document.createElement('div');
+                productEl.className = 'my-product-item';
+                productEl.innerHTML = `
+                    <div class="my-product-header">
+                        <div class="my-product-name">${product.name}</div>
+                        <div class="my-product-price">R ${product.price.toFixed(2)}</div>
+                    </div>
+                    <div class="my-product-details">
+                        <div class="my-product-detail">
+                            <div class="my-product-label">Next Income:</div>
+                            <div class="my-product-value countdown-timer">${countdownText}</div>
+                        </div>
+                        <div class="my-product-detail">
+                            <div class="my-product-label">Daily Income:</div>
+                            <div class="my-product-value">R ${product.dailyIncome.toFixed(2)}</div>
+                        </div>
+                        <div class="my-product-detail">
+                            <div class="my-product-label">Days Completed:</div>
+                            <div class="my-product-value">${product.daysCompleted}/${product.duration}</div>
+                        </div>
+                        <div class="my-product-detail">
+                            <div class="my-product-label">Total Earned:</div>
+                            <div class="my-product-value">R ${(product.dailyIncome * product.daysCompleted).toFixed(2)}</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click handler to claim income when ready
+                if (timeLeft <= 0) {
+                    productEl.style.cursor = 'pointer';
+                    productEl.addEventListener('click', () => claimIncome(product.id));
+                }
+                
+                myProductsList.appendChild(productEl);
+            });
+            
+            // Start countdown timers
+            updateCountdowns();
+        }
+        
+        // Render financial products
+        function renderFinancialProducts() {
+            if (userProducts.length === 0) {
+                financialProductsList.innerHTML = '<div class="no-products">No investments yet</div>';
+                return;
+            }
+            
+            financialProductsList.innerHTML = '';
+            
+            userProducts.forEach(product => {
+                const earned = product.dailyIncome * product.daysCompleted;
+                
+                const productEl = document.createElement('div');
+                productEl.className = 'financial-product';
+                productEl.innerHTML = `
+                    <div class="financial-product-header">${product.name}</div>
+                    <div class="financial-product-details">
+                        <div class="financial-detail">
+                            <div class="financial-detail-label">Earnings duration:</div>
+                            <div class="financial-detail-value">${product.duration - product.daysCompleted}d ${Math.floor(Math.random() * 24)}h</div>
+                        </div>
+                        <div class="financial-detail">
+                            <div class="financial-detail-label">Daily income:</div>
+                            <div class="financial-detail-value">R ${product.dailyIncome.toFixed(2)}</div>
+                        </div>
+                        <div class="financial-detail">
+                            <div class="financial-detail-label">Income earned:</div>
+                            <div class="financial-detail-value">R ${earned.toFixed(2)}</div>
+                        </div>
+                    </div>
+                `;
+                
+                financialProductsList.appendChild(productEl);
+            });
+        }
+        
+        // Update countdown timers for all products
+        function updateCountdowns() {
+            const countdownElements = document.querySelectorAll('.countdown-timer');
+            
+            countdownElements.forEach((el, index) => {
+                const product = userProducts[index];
+                const now = new Date();
+                const lastPayout = new Date(product.lastPayout);
+                const nextPayout = new Date(lastPayout.getTime() + 24 * 60 * 60 * 1000);
+                const timeLeft = nextPayout - now;
+                
+                if (timeLeft > 0) {
+                    const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
+                    const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    el.textContent = `${hoursLeft}h ${minutesLeft}m`;
+                } else {
+                    el.textContent = 'Ready to claim!';
+                    el.parentElement.parentElement.parentElement.style.cursor = 'pointer';
+                }
+            });
+            
+            // Check if any income is ready to claim
+            const readyProducts = userProducts.filter(p => {
+                const lastPayout = new Date(p.lastPayout);
+                const nextPayout = new Date(lastPayout.getTime() + 24 * 60 * 60 * 1000);
+                return nextPayout <= new Date();
+            });
+            
+            if (readyProducts.length > 0) {
+                showToast(`${readyProducts.length} products ready to claim income`, 0, 'warning');
+            }
+        }
+        
+        // Claim income from a product
+        function claimIncome(productId) {
+            const product = userProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            const now = new Date();
+            const lastPayout = new Date(product.lastPayout);
+            const nextPayout = new Date(lastPayout.getTime() + 24 * 60 * 60 * 1000);
+            
+            if (now >= nextPayout) {
+                // Add income to balance
+                incomeBalance += product.dailyIncome;
+                accumulatedIncome += product.dailyIncome;
+                todayIncome += product.dailyIncome;
+                product.daysCompleted++;
+                product.lastPayout = new Date().toISOString();
+                
+                // Update UI
+                updateBalances();
+                updateFinancialStats();
+                renderUserProducts();
+                
+                // Show success message
+                showToast(`Income claimed for ${product.name}`, product.dailyIncome);
+                
+                // If product duration is complete, remove it
+                if (product.daysCompleted >= product.duration) {
+                    userProducts = userProducts.filter(p => p.id !== productId);
+                    renderUserProducts();
+                    renderFinancialProducts();
+                    showToast(`${product.name} investment completed!`, 0, 'success');
+                }
+            }
+        }
+        
+        // Toggle profile menu
+        profileBtn.addEventListener('click', () => {
+            profileMenu.classList.add('active');
+        });
+
+        mineTab.addEventListener('click', () => {
+            profileMenu.classList.add('active');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            profileMenu.classList.remove('active');
+        });
+
+        // Show toast notification
+        function showToast(message, amount, type = 'success') {
+            toast.classList.remove('success', 'error', 'warning');
+            toast.classList.add(type);
+            document.querySelector('.toast-content h4').textContent = message;
+            rewardAmount.textContent = `R ${amount.toFixed(2)}`;
+            
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+        
+        // Generate random reward
+        function generateReward() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            
+            // Check if current time is between 18:00 and 18:30
+            if (hours === 18 && minutes >= 0 && minutes <= 30) {
+                // Generate random amount between R1 and R50
+                const amount = Math.floor(Math.random() * 50) + 1;
+                incomeBalance += amount;
+                accumulatedIncome += amount;
+                todayIncome += amount;
+                updateBalances();
+                updateFinancialStats();
+                showToast('Reward Received!', amount);
+                return amount;
+            } else {
+                showToast('Rewards only available 18:00-18:30', 0, 'warning');
+                return 0;
+            }
+        }
+        
+        // Reward events
+        taskCard.addEventListener('click', generateReward);
+        redEnvelope.addEventListener('click', generateReward);
+        
+        // Toggle bank modal
+        rechargeBtn.addEventListener('click', () => {
+            // Generate a new reference code (4 letters + 2 numbers)
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const numbers = '0123456789';
+            let newRef = '';
+            
+            for(let i = 0; i < 4; i++) {
+                newRef += letters.charAt(Math.floor(Math.random() * letters.length));
+            }
+            
+            for(let i = 0; i < 2; i++) {
+                newRef += numbers.charAt(Math.floor(Math.random() * numbers.length));
+            }
+            
+            referenceCode.textContent = newRef;
+            bankModal.classList.add('active');
+            
+            // Reset the recharge form
+            rechargeAmountInput.value = '';
+            proceedBtn.disabled = true;
+            amountError.style.display = 'none';
+            paymentConfirmation.style.display = 'none';
+            successMessage.style.display = 'none';
+        });
+
+        closeBank.addEventListener('click', () => {
+            bankModal.classList.remove('active');
+        });
+        
+        // Toggle withdraw modal
+        withdrawBtn.addEventListener('click', () => {
+            withdrawModal.classList.add('active');
+            
+            // Show appropriate section based on bank binding status
+            bankBindingSection.style.display = 'block';
+            
+            if (bankBound) {
+                boundBankDetails.style.display = 'block';
+                bankBindingForm.style.display = 'none';
+                withdrawAmountSection.style.display = 'block';
+                
+                // Populate bound bank details
+                document.getElementById('bound-name').textContent = bankDetails.name;
+                document.getElementById('bound-bank').textContent = bankDetails.bank;
+                document.getElementById('bound-account').textContent = bankDetails.account;
+            } else {
+                boundBankDetails.style.display = 'none';
+                bankBindingForm.style.display = 'block';
+                withdrawAmountSection.style.display = 'none';
+            }
+        });
+        
+        closeWithdraw.addEventListener('click', () => {
+            withdrawModal.classList.remove('active');
+        });
+
+        // Validate recharge amount
+        rechargeAmountInput.addEventListener('input', function() {
+            const amount = parseFloat(this.value);
+            
+            if (amount >= 300) {
+                proceedBtn.disabled = false;
+                amountError.style.display = 'none';
+            } else {
+                proceedBtn.disabled = true;
+                if (this.value !== '') {
+                    amountError.style.display = 'block';
+                } else {
+                    amountError.style.display = 'none';
+                }
+            }
+        });
+
+        // Proceed to payment confirmation
+        proceedBtn.addEventListener('click', function() {
+            paymentConfirmation.style.display = 'block';
+            document.querySelector('.recharge-amount-section').style.display = 'none';
+        });
+
+        // Handle payment confirmation
+        paidBtn.addEventListener('click', function() {
+            // Show notification about keeping proof of payment
+            showNotification('Keep proof of payment safe. It will be required when you do withdrawal.', 'info');
+            
+            // Start countdown
+            let seconds = 60;
+            paidBtn.disabled = true;
+            paidBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            const countdownInterval = setInterval(() => {
+                seconds--;
+                countdownDisplay.textContent = `Processing payment... ${seconds} seconds remaining`;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                    
+                    // Get recharge amount
+                    const amount = parseFloat(rechargeAmountInput.value);
+                    rechargeBalance += amount; // Only add to recharge balance, not total balance
+                    updateBalances();
+                    
+                    // Show success message
+                    successAmount.textContent = `R ${amount.toFixed(2)} has been added to your Recharge Funds`;
+                    successMessage.style.display = 'block';
+                    countdownDisplay.style.display = 'none';
+                    
+                    // Reset payment button
+                    setTimeout(() => {
+                        paidBtn.disabled = false;
+                        paidBtn.innerHTML = '<i class="fas fa-check-circle"></i> I HAVE PAID';
+                        
+                        // Close modal after 3 seconds
+                        setTimeout(() => {
+                            bankModal.classList.remove('active');
+                            // Reset form for next time
+                            document.querySelector('.recharge-amount-section').style.display = 'block';
+                            paymentConfirmation.style.display = 'none';
+                            successMessage.style.display = 'none';
+                            countdownDisplay.style.display = 'block';
+                        }, 3000);
+                    }, 2000);
+                }
+            }, 1000);
+        });
+
+        // Close modals when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!profileMenu.contains(e.target) && e.target !== profileBtn && e.target !== mineTab) {
+                profileMenu.classList.remove('active');
+            }
+            
+            if (bankModal.classList.contains('active') && !document.querySelector('.bank-content').contains(e.target) && e.target !== rechargeBtn) {
+                bankModal.classList.remove('active');
+            }
+            
+            if (withdrawModal.classList.contains('active') && !document.querySelector('.withdraw-content').contains(e.target) && e.target !== withdrawBtn) {
+                withdrawModal.classList.remove('active');
+            }
+            
+            if (confirmationModal.classList.contains('active') && !document.querySelector('.confirmation-content').contains(e.target) && !e.target.classList.contains('invest-btn')) {
+                confirmationModal.classList.remove('active');
+            }
+        });
+
+        // Copy reference code
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(referenceCode.textContent)
+                .then(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Reference';
+                    }, 2000);
+                });
+        });
+
+        // Navigation interactivity
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const icon = this.querySelector('i');
+                icon.style.transform = 'scale(1.3)';
+                setTimeout(() => {
+                    icon.style.transform = '';
+                }, 300);
+            });
+        });
+
+        // Tab switching
+        homeTab.addEventListener('click', () => {
+            document.querySelector('.dashboard').style.display = 'grid';
+            document.querySelector('.red-envelope-card').style.display = 'block';
+            myProductsSection.style.display = 'block';
+            productsGrid.style.display = 'none';
+            sectionHeader.style.display = 'none';
+            financialSection.style.display = 'none';
+        });
+
+        productsTab.addEventListener('click', () => {
+            document.querySelector('.dashboard').style.display = 'none';
+            document.querySelector('.red-envelope-card').style.display = 'none';
+            myProductsSection.style.display = 'none';
+            productsGrid.style.display = 'grid';
+            sectionHeader.style.display = 'flex';
+            financialSection.style.display = 'none';
+        });
+
+        financialTab.addEventListener('click', () => {
+            document.querySelector('.dashboard').style.display = 'none';
+            document.querySelector('.red-envelope-card').style.display = 'none';
+            myProductsSection.style.display = 'none';
+            productsGrid.style.display = 'none';
+            sectionHeader.style.display = 'none';
+            financialSection.style.display = 'block';
+            renderFinancialProducts();
+        });
+
+        mineTab.addEventListener('click', () => {
+            document.querySelector('.dashboard').style.display = 'none';
+            document.querySelector('.red-envelope-card').style.display = 'none';
+            myProductsSection.style.display = 'block';
+            productsGrid.style.display = 'none';
+            sectionHeader.style.display = 'none';
+            financialSection.style.display = 'none';
+        });
+
+        // Financial section buttons
+        financialRechargeBtn.addEventListener('click', () => {
+            rechargeBtn.click();
+        });
+
+        financialWithdrawBtn.addEventListener('click', () => {
+            withdrawBtn.click();
+        });
+
+        financialDetailsBtn.addEventListener('click', () => {
+            showToast('Details feature coming soon', 0, 'info');
+        });
+
+        // Floating particles
+        setInterval(() => {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = Math.random() * 6 + 2 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.background = 'rgba(76, 201, 240, ' + (Math.random() * 0.3 + 0.1) + ')';
+            particle.style.borderRadius = '50%';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = '0';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '0';
+            particle.style.boxShadow = '0 0 10px rgba(76, 201, 240, 0.5)';
+            
+            document.body.appendChild(particle);
+            
+            // Animate particle
+            const animation = particle.animate([
+                { top: '0', opacity: 0 },
+                { top: '10px', opacity: 1 },
+                { top: '100vh', opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'cubic-bezier(0.2, 0, 0.8, 1)'
+            });
+            
+            animation.onfinish = () => particle.remove();
+        }, 200);
+        
+        // Bind bank account
+        bindBtn.addEventListener('click', () => {
+            const name = document.getElementById('bank-name-input').value.trim();
+            const bank = document.getElementById('bank-select').value;
+            const account = document.getElementById('account-number-input').value.trim();
+            
+            if (!name) {
+                showToast('Please enter your name', 0, 'error');
+                return;
+            }
+            
+            if (!bank) {
+                showToast('Please select a bank', 0, 'error');
+                return;
+            }
+            
+            if (!account) {
+                showToast('Please enter account number', 0, 'error');
+                return;
+            }
+            
+            // Save bank details
+            bankBound = true;
+            bankDetails = {
+                name: name,
+                bank: bank,
+                account: account
+            };
+            
+            // Update UI
+            bankBindingForm.style.display = 'none';
+            boundBankDetails.style.display = 'block';
+            withdrawAmountSection.style.display = 'block';
+            
+            // Populate bound bank details
+            document.getElementById('bound-name').textContent = name;
+            document.getElementById('bound-bank').textContent = bank;
+            document.getElementById('bound-account').textContent = account;
+            
+            showToast('Bank account bound successfully', 0);
+        });
+        
+        // Handle withdrawal
+        document.getElementById('withdraw-proceed-btn').addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            
+            if (isNaN(amount) || amount < 50) {
+                showToast('Minimum withdrawal is R50', 0, 'error');
+                return;
+            }
+            
+            if (amount > totalBalance) {
+                showToast('Insufficient funds', 0, 'error');
+                return;
+            }
+            
+            // Create WhatsApp message
+            const message = `Withdrawal Request\nBank: ${bankDetails.bank}\nAccount Number: ${bankDetails.account}\nAccount Holder: ${bankDetails.name}\nAmount: R${amount.toFixed(2)}`;
+            const whatsappUrl = `https://wa.me/27631287462?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Deduct from balance
+            incomeBalance -= amount;
+            updateBalances();
+            
+            // Show success
+            showToast(`Withdrawal of R${amount.toFixed(2)} initiated`, 0);
+            
+            // Close modal after delay
+            setTimeout(() => {
+                withdrawModal.classList.remove('active');
+                document.getElementById('withdraw-amount').value = '';
+            }, 2000);
+        });
+        
+        // Make name editable
+        userName.addEventListener('click', () => {
+            const currentName = userName.textContent;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentName;
+            input.className = 'name-input';
+            
+            userName.innerHTML = '';
+            userName.appendChild(input);
+            input.focus();
+            
+            input.addEventListener('blur', () => {
+                const newName = input.value.trim() || 'John Doe';
+                userName.textContent = newName;
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    input.blur();
+                }
+            });
+        });
+        
+        // Handle product purchase
+        document.querySelectorAll('.invest-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const product = this.getAttribute('data-product');
+                const price = parseFloat(this.getAttribute('data-price'));
+                const dailyIncome = parseFloat(this.getAttribute('data-daily'));
+                
+                // Check if user has enough recharge balance
+                if (rechargeBalance < price) {
+                    showToast(`Insufficient recharge funds for ${product}`, 0, 'error');
+                    return;
+                }
+                
+                // Store current product and price
+                currentProduct = product;
+                currentPrice = price;
+                currentDailyIncome = dailyIncome;
+                
+                // Show confirmation modal
+                confirmationText.textContent = `Are you sure you want to purchase ${product} for R${price.toFixed(2)}?`;
+                confirmationModal.classList.add('active');
+            });
+        });
+        
+        // Confirm purchase
+        confirmPurchaseBtn.addEventListener('click', () => {
+            if (currentProduct && currentPrice > 0) {
+                // Deduct from recharge balance
+                rechargeBalance -= currentPrice;
+                
+                // Add the product to user's investments
+                const newProduct = {
+                    id: Date.now().toString(),
+                    name: currentProduct,
+                    price: currentPrice,
+                    dailyIncome: currentDailyIncome,
+                    duration: 66,
+                    daysCompleted: 0,
+                    lastPayout: new Date().toISOString()
+                };
+                
+                userProducts.push(newProduct);
+                investmentCount = userProducts.length;
+                
+                // Update UI
+                updateBalances();
+                updateFinancialStats();
+                renderUserProducts();
+                renderFinancialProducts();
+                
+                // Show success message
+                showToast(`Successfully purchased ${currentProduct}`, currentPrice);
+                
+                // Close confirmation modal
+                confirmationModal.classList.remove('active');
+                
+                // Reset current product
+                currentProduct = null;
+                currentPrice = 0;
+                currentDailyIncome = 0;
+            }
+        });
+        
+        // Cancel purchase
+        cancelPurchaseBtn.addEventListener('click', () => {
+            confirmationModal.classList.remove('active');
+            currentProduct = null;
+            currentPrice = 0;
+            currentDailyIncome = 0;
+        });
+        
+        closeConfirmation.addEventListener('click', () => {
+            confirmationModal.classList.remove('active');
+            currentProduct = null;
+            currentPrice = 0;
+            currentDailyIncome = 0;
+        });
+        
+        // Initialize balances and update countdowns every minute
+        updateBalances();
+        updateFinancialStats();
+        setInterval(updateCountdowns, 60000);
+    </script>
+</body>
+</html>
