@@ -1979,6 +1979,256 @@
             font-weight: 600;
         }
         
+        /* Team Section */
+        .team-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .team-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 25px;
+        }
+        
+        .team-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .team-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .team-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .team-stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .team-stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 10px 0 5px;
+            color: var(--secondary);
+        }
+        
+        .team-stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .invite-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .invite-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .invite-text {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+        
+        .invite-link-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .invite-link {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px 15px;
+            font-size: 14px;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .referral-structure {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+        }
+        
+        .referral-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .referral-level {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .referral-level:last-child {
+            border-bottom: none;
+        }
+        
+        .level-name {
+            font-weight: 600;
+        }
+        
+        .level-percentage {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        /* Transaction Records */
+        .transaction-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .transaction-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 25px;
+        }
+        
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .transaction-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .transaction-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .transaction-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .transaction-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .transaction-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+        
+        .transaction-info {
+            flex: 1;
+        }
+        
+        .transaction-type {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .transaction-date {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .transaction-amount {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .transaction-amount.deposit {
+            color: var(--success);
+        }
+        
+        .transaction-amount.withdrawal {
+            color: var(--accent);
+        }
+        
+        .no-transactions {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+        }
+        
+        /* Bonus Message */
+        .bonus-message {
+            background: rgba(56, 176, 0, 0.15);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            display: none;
+        }
+        
+        .bonus-icon {
+            font-size: 24px;
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+        
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .app-header {
@@ -2017,6 +2267,18 @@
             .dashboard-btn {
                 padding: 10px 15px;
                 font-size: 14px;
+            }
+            
+            .team-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .financial-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .invite-link-container {
+                flex-direction: column;
             }
         }
 
@@ -2367,6 +2629,77 @@
                 </div>
             </div>
 
+            <!-- Transaction Records Section -->
+            <div class="transaction-section" id="transaction-section">
+                <div class="transaction-card">
+                    <div class="transaction-header">
+                        <div class="transaction-title">Transaction Records</div>
+                    </div>
+                    
+                    <div class="transaction-tabs">
+                        <div class="transaction-tab active" data-type="all">All</div>
+                        <div class="transaction-tab" data-type="deposit">Deposits</div>
+                        <div class="transaction-tab" data-type="withdrawal">Withdrawals</div>
+                    </div>
+                    
+                    <div class="transaction-list" id="transaction-list">
+                        <div class="no-transactions">No transactions yet</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="team-section" id="team-section">
+                <div class="team-card">
+                    <div class="team-header">
+                        <div class="team-title">My Team</div>
+                    </div>
+                    
+                    <div class="team-stats">
+                        <div class="team-stat-card">
+                            <div class="team-stat-label">Direct Referrals</div>
+                            <div class="team-stat-value" id="direct-referrals">0</div>
+                        </div>
+                        <div class="team-stat-card">
+                            <div class="team-stat-label">Team Size</div>
+                            <div class="team-stat-value" id="team-size">0</div>
+                        </div>
+                        <div class="team-stat-card">
+                            <div class="team-stat-label">Team Earnings</div>
+                            <div class="team-stat-value" id="team-earnings">R0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="invite-section">
+                        <div class="invite-title">Invite Friends & Earn</div>
+                        <p class="invite-text">Share your unique referral link and earn commissions when your friends join and invest</p>
+                        
+                        <div class="invite-link-container">
+                            <div class="invite-link" id="invite-link">https://whop-42qr.vercel.app/#</div>
+                            <button class="copy-btn" id="copy-invite-link">Copy</button>
+                        </div>
+                        
+                        <div class="invite-text">Your Invite Code: <strong id="user-invite-code">WHOP123</strong></div>
+                    </div>
+                    
+                    <div class="referral-structure">
+                        <div class="referral-title">Referral Commission Structure</div>
+                        <div class="referral-level">
+                            <div class="level-name">Level 1 (Direct Referrals)</div>
+                            <div class="level-percentage">30% Commission</div>
+                        </div>
+                        <div class="referral-level">
+                            <div class="level-name">Level 2 (Friends of Friends)</div>
+                            <div class="level-percentage">8% Commission</div>
+                        </div>
+                        <div class="referral-level">
+                            <div class="level-name">Level 3 (Extended Network)</div>
+                            <div class="level-percentage">1% Commission</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Financial Section -->
             <div class="financial-section" id="financial-section">
                 <div class="financial-card">
@@ -2624,7 +2957,7 @@
                 </div>
                 <div class="detail-row">
                     <div class="detail-label">Member ID:</div>
-                    <div class="detail-value">#USR-123456</div>
+                    <div class="detail-value" id="member-id">#USR-123456</div>
                 </div>
                 <div class="detail-row">
                     <div class="detail-label">Account Level:</div>
@@ -2632,7 +2965,7 @@
                 </div>
                 <div class="detail-row">
                     <div class="detail-label">Join Date:</div>
-                    <div class="detail-value">2023-10-15</div>
+                    <div class="detail-value" id="join-date">2023-10-15</div>
                 </div>
             </div>
             
@@ -2653,6 +2986,12 @@
                 <div class="bank-header">
                     <h2>Recharge Instructions</h2>
                     <p>Use the following details to recharge your account</p>
+                </div>
+                
+                <div class="bonus-message" id="bonus-message">
+                    <i class="fas fa-gift bonus-icon"></i>
+                    <h3>Special Bonus!</h3>
+                    <p>Deposit R200 and get R100 bonus immediately. Your balance will be R300 after successful recharge!</p>
                 </div>
                 
                 <div class="bank-details">
@@ -2676,8 +3015,8 @@
                 
                 <!-- Recharge Amount Section -->
                 <div class="recharge-amount-section">
-                    <input type="number" id="recharge-amount" class="amount-input" placeholder="Enter amount (minimum R300)" min="300">
-                    <div class="amount-error" id="amount-error">Minimum amount is R300</div>
+                    <input type="number" id="recharge-amount" class="amount-input" placeholder="Enter amount (minimum R200)" min="200">
+                    <div class="amount-error" id="amount-error">Minimum amount is R200</div>
                     <button class="proceed-btn" id="proceed-btn" disabled>PROCEED</button>
                 </div>
                 
@@ -2780,7 +3119,7 @@
                 <i class="fas fa-chart-line"></i>
                 Financial
             </div>
-            <div class="nav-item">
+            <div class="nav-item" id="team-tab">
                 <i class="fas fa-users"></i>
                 Team
             </div>
@@ -2829,6 +3168,14 @@
         // User's purchased products
         let userProducts = [];
         
+        // User's transactions
+        let transactions = [];
+        
+        // Team statistics
+        let directReferrals = 0;
+        let teamSize = 0;
+        let teamEarnings = 0;
+        
         // DOM elements
         const authContainer = document.getElementById('auth-container');
         const dashboardContainer = document.getElementById('dashboard-container');
@@ -2860,6 +3207,11 @@
             updateBalances();
             updateFinancialStats();
             renderUserProducts();
+            renderTransactions();
+            updateTeamStats();
+            
+            // Check for invitation code in URL
+            checkInvitationCode();
         }
         
         // Show auth and hide dashboard
@@ -3197,6 +3549,37 @@
             });
         });
         
+        // Generate random member ID
+        function generateMemberId() {
+            const prefix = 'WHOP';
+            const randomNum = Math.floor(100000 + Math.random() * 900000);
+            return `${prefix}${randomNum}`;
+        }
+        
+        // Generate random invite code
+        function generateInviteCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        // Check for invitation code in URL
+        function checkInvitationCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            
+            if (refCode) {
+                // If user is not logged in, prefill the invitation code in registration form
+                const invitationInput = document.getElementById('invitation-code');
+                if (invitationInput && !sessionStorage.getItem(CURRENT_USER_KEY)) {
+                    invitationInput.value = refCode;
+                }
+            }
+        }
+        
         // Registration functionality
         document.getElementById('register-btn').addEventListener('click', function() {
             const phone = document.getElementById('phone-number').value;
@@ -3250,13 +3633,22 @@
                 return;
             }
             
+            // Generate unique IDs
+            const memberId = generateMemberId();
+            const inviteCode = generateInviteCode();
+            
             // Create new user
             const newUser = {
                 phone: phone,
                 password: password,
                 accountLevel: 'Basic',
                 registrationDate: new Date().toISOString(),
-                invitationCode: invitationCode || null
+                invitationCode: invitationCode || null,
+                memberId: memberId,
+                inviteCode: inviteCode,
+                transactions: [],
+                referredUsers: [],
+                joinDate: new Date().toLocaleDateString('en-ZA')
             };
             
             // Add to users array
@@ -3322,6 +3714,12 @@
             
             // Show dashboard
             showDashboard(user.phone);
+            
+            // Update user info in dashboard
+            document.getElementById('member-id').textContent = user.memberId;
+            document.getElementById('join-date').textContent = user.joinDate;
+            document.getElementById('user-invite-code').textContent = user.inviteCode;
+            document.getElementById('invite-link').textContent = `https://whop-42qr.vercel.app/#${user.inviteCode}`;
         });
         
         // Reset password functionality
@@ -3473,10 +3871,13 @@
         const homeTab = document.getElementById('home-tab');
         const productsTab = document.getElementById('products-tab');
         const financialTab = document.getElementById('financial-tab');
+        const teamTab = document.getElementById('team-tab');
         const myProductsSection = document.getElementById('my-products-section');
         const productsGrid = document.querySelector('.products-grid');
         const sectionHeader = document.querySelector('.section-header');
         const financialSection = document.getElementById('financial-section');
+        const teamSection = document.getElementById('team-section');
+        const transactionSection = document.getElementById('transaction-section');
         const accumulatedIncomeEl = document.getElementById('accumulated-income');
         const todayIncomeEl = document.getElementById('today-income');
         const investmentCountEl = document.getElementById('investment-count');
@@ -3484,6 +3885,14 @@
         const financialRechargeBtn = document.getElementById('financial-recharge');
         const financialWithdrawBtn = document.getElementById('financial-withdraw');
         const financialDetailsBtn = document.getElementById('financial-details');
+        const directReferralsEl = document.getElementById('direct-referrals');
+        const teamSizeEl = document.getElementById('team-size');
+        const teamEarningsEl = document.getElementById('team-earnings');
+        const inviteLink = document.getElementById('invite-link');
+        const copyInviteLinkBtn = document.getElementById('copy-invite-link');
+        const transactionList = document.getElementById('transaction-list');
+        const transactionTabs = document.querySelectorAll('.transaction-tab');
+        const bonusMessage = document.getElementById('bonus-message');
         
         // Update balance displays
         function updateBalances() {
@@ -3498,6 +3907,61 @@
             accumulatedIncomeEl.textContent = `R${accumulatedIncome.toFixed(2)}`;
             todayIncomeEl.textContent = `R${todayIncome}`;
             investmentCountEl.textContent = userProducts.length;
+        }
+        
+        // Update team stats
+        function updateTeamStats() {
+            directReferralsEl.textContent = directReferrals;
+            teamSizeEl.textContent = teamSize;
+            teamEarningsEl.textContent = `R${teamEarnings.toFixed(2)}`;
+        }
+        
+        // Add transaction
+        function addTransaction(type, amount, description = '') {
+            const transaction = {
+                id: Date.now(),
+                type: type,
+                amount: amount,
+                description: description,
+                date: new Date().toLocaleString('en-ZA')
+            };
+            
+            transactions.unshift(transaction);
+            renderTransactions();
+        }
+        
+        // Render transactions
+        function renderTransactions(filter = 'all') {
+            if (transactions.length === 0) {
+                transactionList.innerHTML = '<div class="no-transactions">No transactions yet</div>';
+                return;
+            }
+            
+            let filteredTransactions = transactions;
+            if (filter !== 'all') {
+                filteredTransactions = transactions.filter(t => t.type === filter);
+            }
+            
+            if (filteredTransactions.length === 0) {
+                transactionList.innerHTML = `<div class="no-transactions">No ${filter} transactions</div>`;
+                return;
+            }
+            
+            transactionList.innerHTML = '';
+            
+            filteredTransactions.forEach(transaction => {
+                const transactionEl = document.createElement('div');
+                transactionEl.className = 'transaction-item';
+                transactionEl.innerHTML = `
+                    <div class="transaction-info">
+                        <div class="transaction-type">${transaction.description || transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</div>
+                        <div class="transaction-date">${transaction.date}</div>
+                    </div>
+                    <div class="transaction-amount ${transaction.type}">R ${transaction.amount.toFixed(2)}</div>
+                `;
+                
+                transactionList.appendChild(transactionEl);
+            });
         }
         
         // Render user's products
@@ -3655,6 +4119,9 @@
                 product.daysCompleted++;
                 product.lastPayout = new Date().toISOString();
                 
+                // Add transaction
+                addTransaction('income', product.dailyIncome, `${product.name} Daily Income`);
+                
                 // Update UI
                 updateBalances();
                 updateFinancialStats();
@@ -3712,6 +4179,10 @@
                 incomeBalance += amount;
                 accumulatedIncome += amount;
                 todayIncome += amount;
+                
+                // Add transaction
+                addTransaction('reward', amount, 'Task Reward');
+                
                 updateBalances();
                 updateFinancialStats();
                 showToast('Reward Received!', amount);
@@ -3743,6 +4214,9 @@
             
             referenceCode.textContent = newRef;
             bankModal.classList.add('active');
+            
+            // Show bonus message
+            bonusMessage.style.display = 'block';
             
             // Reset the recharge form
             rechargeAmountInput.value = '';
@@ -3787,7 +4261,7 @@
         rechargeAmountInput.addEventListener('input', function() {
             const amount = parseFloat(this.value);
             
-            if (amount >= 300) {
+            if (amount >= 200) {
                 proceedBtn.disabled = false;
                 amountError.style.display = 'none';
             } else {
@@ -3825,191 +4299,86 @@
                     
                     // Get recharge amount
                     const amount = parseFloat(rechargeAmountInput.value);
-                    rechargeBalance += amount; // Only add to recharge balance, not total balance
+                    let bonus = 0;
+                    
+                    // Add bonus for R200 deposit
+                    if (amount >= 200) {
+                        bonus = 100;
+                        showNotification(`Congratulations! You received R${bonus} bonus for your deposit.`);
+                    }
+                    
+                    const totalAmount = amount + bonus;
+                    
+                    // Update balances
+                    rechargeBalance += totalAmount;
+                    incomeBalance += bonus; // Add bonus to income balance
+                    
+                    // Add transaction records
+                    addTransaction('deposit', amount, 'Account Recharge');
+                    if (bonus > 0) {
+                        addTransaction('bonus', bonus, 'Deposit Bonus');
+                    }
+                    
+                    // Update UI
                     updateBalances();
                     
                     // Show success message
-                    successAmount.textContent = `R ${amount.toFixed(2)} has been added to your Recharge Funds`;
+                    successAmount.textContent = `R ${totalAmount.toFixed(2)} has been added to your Recharge Funds`;
                     successMessage.style.display = 'block';
-                    countdownDisplay.style.display = 'none';
                     
-                    // Reset payment button
+                    // Reset button
                     setTimeout(() => {
                         paidBtn.disabled = false;
                         paidBtn.innerHTML = '<i class="fas fa-check-circle"></i> I HAVE PAID';
+                        countdownDisplay.textContent = 'Please wait for payment confirmation...';
                         
                         // Close modal after 3 seconds
                         setTimeout(() => {
                             bankModal.classList.remove('active');
-                            // Reset form for next time
-                            document.querySelector('.recharge-amount-section').style.display = 'block';
-                            paymentConfirmation.style.display = 'none';
-                            successMessage.style.display = 'none';
-                            countdownDisplay.style.display = 'block';
                         }, 3000);
                     }, 2000);
                 }
             }, 1000);
         });
 
-        // Close modals when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!profileMenu.contains(e.target) && e.target !== profileBtn && e.target !== mineTab) {
-                profileMenu.classList.remove('active');
-            }
-            
-            if (bankModal.classList.contains('active') && !document.querySelector('.bank-content').contains(e.target) && e.target !== rechargeBtn) {
-                bankModal.classList.remove('active');
-            }
-            
-            if (withdrawModal.classList.contains('active') && !document.querySelector('.withdraw-content').contains(e.target) && e.target !== withdrawBtn) {
-                withdrawModal.classList.remove('active');
-            }
-            
-            if (confirmationModal.classList.contains('active') && !document.querySelector('.confirmation-content').contains(e.target) && !e.target.classList.contains('invest-btn')) {
-                confirmationModal.classList.remove('active');
-            }
-        });
-
         // Copy reference code
-        copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(referenceCode.textContent)
-                .then(() => {
-                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                    setTimeout(() => {
-                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Reference';
-                    }, 2000);
-                });
-        });
-
-        // Navigation interactivity
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(nav => {
-                    nav.classList.remove('active');
-                });
-                this.classList.add('active');
-                
-                const icon = this.querySelector('i');
-                icon.style.transform = 'scale(1.3)';
-                setTimeout(() => {
-                    icon.style.transform = '';
-                }, 300);
+        copyBtn.addEventListener('click', function() {
+            const refText = referenceCode.textContent;
+            navigator.clipboard.writeText(refText).then(() => {
+                showNotification('Reference code copied to clipboard!');
+            }).catch(err => {
+                showNotification('Failed to copy reference code', 'error');
             });
         });
-
-        // Tab switching
-        homeTab.addEventListener('click', () => {
-            document.querySelector('.dashboard').style.display = 'grid';
-            document.querySelector('.red-envelope-card').style.display = 'block';
-            myProductsSection.style.display = 'block';
-            productsGrid.style.display = 'none';
-            sectionHeader.style.display = 'none';
-            financialSection.style.display = 'none';
-        });
-
-        productsTab.addEventListener('click', () => {
-            document.querySelector('.dashboard').style.display = 'none';
-            document.querySelector('.red-envelope-card').style.display = 'none';
-            myProductsSection.style.display = 'none';
-            productsGrid.style.display = 'grid';
-            sectionHeader.style.display = 'flex';
-            financialSection.style.display = 'none';
-        });
-
-        financialTab.addEventListener('click', () => {
-            document.querySelector('.dashboard').style.display = 'none';
-            document.querySelector('.red-envelope-card').style.display = 'none';
-            myProductsSection.style.display = 'none';
-            productsGrid.style.display = 'none';
-            sectionHeader.style.display = 'none';
-            financialSection.style.display = 'block';
-            renderFinancialProducts();
-        });
-
-        mineTab.addEventListener('click', () => {
-            document.querySelector('.dashboard').style.display = 'none';
-            document.querySelector('.red-envelope-card').style.display = 'none';
-            myProductsSection.style.display = 'block';
-            productsGrid.style.display = 'none';
-            sectionHeader.style.display = 'none';
-            financialSection.style.display = 'none';
-        });
-
-        // Financial section buttons
-        financialRechargeBtn.addEventListener('click', () => {
-            rechargeBtn.click();
-        });
-
-        financialWithdrawBtn.addEventListener('click', () => {
-            withdrawBtn.click();
-        });
-
-        financialDetailsBtn.addEventListener('click', () => {
-            showToast('Details feature coming soon', 0, 'info');
-        });
-
-        // Floating particles
-        setInterval(() => {
-            const particle = document.createElement('div');
-            particle.style.position = 'fixed';
-            particle.style.width = Math.random() * 6 + 2 + 'px';
-            particle.style.height = particle.style.width;
-            particle.style.background = 'rgba(76, 201, 240, ' + (Math.random() * 0.3 + 0.1) + ')';
-            particle.style.borderRadius = '50%';
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.top = '0';
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '0';
-            particle.style.boxShadow = '0 0 10px rgba(76, 201, 240, 0.5)';
-            
-            document.body.appendChild(particle);
-            
-            // Animate particle
-            const animation = particle.animate([
-                { top: '0', opacity: 0 },
-                { top: '10px', opacity: 1 },
-                { top: '100vh', opacity: 0 }
-            ], {
-                duration: Math.random() * 3000 + 2000,
-                easing: 'cubic-bezier(0.2, 0, 0.8, 1)'
-            });
-            
-            animation.onfinish = () => particle.remove();
-        }, 200);
         
-        // Bind bank account
-        bindBtn.addEventListener('click', () => {
-            const name = document.getElementById('bank-name-input').value.trim();
+        // Copy invite link
+        copyInviteLinkBtn.addEventListener('click', function() {
+            const linkText = inviteLink.textContent;
+            navigator.clipboard.writeText(linkText).then(() => {
+                showNotification('Invite link copied to clipboard!');
+            }).catch(err => {
+                showNotification('Failed to copy invite link', 'error');
+            });
+        });
+        
+        // Bank account binding
+        bindBtn.addEventListener('click', function() {
+            const name = document.getElementById('bank-name-input').value;
             const bank = document.getElementById('bank-select').value;
-            const account = document.getElementById('account-number-input').value.trim();
+            const account = document.getElementById('account-number-input').value;
             
-            if (!name) {
-                showToast('Please enter your name', 0, 'error');
-                return;
-            }
-            
-            if (!bank) {
-                showToast('Please select a bank', 0, 'error');
-                return;
-            }
-            
-            if (!account) {
-                showToast('Please enter account number', 0, 'error');
+            if (!name || !bank || !account) {
+                showNotification('Please fill in all bank details', 'error');
                 return;
             }
             
             // Save bank details
+            bankDetails = { name, bank, account };
             bankBound = true;
-            bankDetails = {
-                name: name,
-                bank: bank,
-                account: account
-            };
             
             // Update UI
-            bankBindingForm.style.display = 'none';
             boundBankDetails.style.display = 'block';
+            bankBindingForm.style.display = 'none';
             withdrawAmountSection.style.display = 'block';
             
             // Populate bound bank details
@@ -4017,150 +4386,266 @@
             document.getElementById('bound-bank').textContent = bank;
             document.getElementById('bound-account').textContent = account;
             
-            showToast('Bank account bound successfully', 0);
+            showNotification('Bank account bound successfully!');
         });
         
-        // Handle withdrawal
-        document.getElementById('withdraw-proceed-btn').addEventListener('click', () => {
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            
-            if (isNaN(amount) || amount < 50) {
-                showToast('Minimum withdrawal is R50', 0, 'error');
-                return;
-            }
-            
-            if (amount > totalBalance) {
-                showToast('Insufficient funds', 0, 'error');
-                return;
-            }
-            
-            // Create WhatsApp message
-            const message = `Withdrawal Request\nBank: ${bankDetails.bank}\nAccount Number: ${bankDetails.account}\nAccount Holder: ${bankDetails.name}\nAmount: R${amount.toFixed(2)}`;
-            const whatsappUrl = `https://wa.me/27631287462?text=${encodeURIComponent(message)}`;
-            
-            // Open WhatsApp
-            window.open(whatsappUrl, '_blank');
-            
-            // Deduct from balance
-            incomeBalance -= amount;
-            updateBalances();
-            
-            // Show success
-            showToast(`Withdrawal of R${amount.toFixed(2)} initiated`, 0);
-            
-            // Close modal after delay
-            setTimeout(() => {
-                withdrawModal.classList.remove('active');
-                document.getElementById('withdraw-amount').value = '';
-            }, 2000);
-        });
-        
-        // Make name editable
-        userName.addEventListener('click', () => {
-            const currentName = userName.textContent;
+        // Editable name
+        userName.addEventListener('click', function() {
+            const currentName = this.textContent;
             const input = document.createElement('input');
             input.type = 'text';
-            input.value = currentName;
             input.className = 'name-input';
+            input.value = currentName;
             
-            userName.innerHTML = '';
-            userName.appendChild(input);
+            this.textContent = '';
+            this.appendChild(input);
             input.focus();
             
-            input.addEventListener('blur', () => {
-                const newName = input.value.trim() || 'John Doe';
+            input.addEventListener('blur', function() {
+                const newName = this.value.trim() || currentName;
                 userName.textContent = newName;
             });
             
-            input.addEventListener('keydown', (e) => {
+            input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    input.blur();
+                    this.blur();
                 }
             });
         });
         
-        // Handle product purchase
-        document.querySelectorAll('.invest-btn').forEach(button => {
-            button.addEventListener('click', function() {
+        // Product purchase functionality
+        document.querySelectorAll('.invest-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
                 const product = this.getAttribute('data-product');
                 const price = parseFloat(this.getAttribute('data-price'));
                 const dailyIncome = parseFloat(this.getAttribute('data-daily'));
                 
                 // Check if user has enough recharge balance
                 if (rechargeBalance < price) {
-                    showToast(`Insufficient recharge funds for ${product}`, 0, 'error');
+                    showNotification('Insufficient recharge balance. Please recharge first.', 'error');
                     return;
                 }
                 
-                // Store current product and price
-                currentProduct = product;
-                currentPrice = price;
-                currentDailyIncome = dailyIncome;
+                // Store current product info
+                currentProduct = {
+                    name: product,
+                    price: price,
+                    dailyIncome: dailyIncome,
+                    duration: 66 // All products have 66 days duration
+                };
                 
                 // Show confirmation modal
-                confirmationText.textContent = `Are you sure you want to purchase ${product} for R${price.toFixed(2)}?`;
+                confirmationText.textContent = `Are you sure you want to purchase ${product} for R${price}?`;
                 confirmationModal.classList.add('active');
             });
         });
         
-        // Confirm purchase
-        confirmPurchaseBtn.addEventListener('click', () => {
-            if (currentProduct && currentPrice > 0) {
-                // Deduct from recharge balance
-                rechargeBalance -= currentPrice;
-                
-                // Add the product to user's investments
-                const newProduct = {
-                    id: Date.now().toString(),
-                    name: currentProduct,
-                    price: currentPrice,
-                    dailyIncome: currentDailyIncome,
-                    duration: 66,
-                    daysCompleted: 0,
-                    lastPayout: new Date().toISOString()
-                };
-                
-                userProducts.push(newProduct);
-                investmentCount = userProducts.length;
-                
-                // Update UI
-                updateBalances();
-                updateFinancialStats();
-                renderUserProducts();
-                renderFinancialProducts();
-                
-                // Show success message
-                showToast(`Successfully purchased ${currentProduct}`, currentPrice);
-                
-                // Close confirmation modal
-                confirmationModal.classList.remove('active');
-                
-                // Reset current product
-                currentProduct = null;
-                currentPrice = 0;
-                currentDailyIncome = 0;
-            }
+        // Handle purchase confirmation
+        confirmPurchaseBtn.addEventListener('click', function() {
+            if (!currentProduct) return;
+            
+            // Deduct from recharge balance
+            rechargeBalance -= currentProduct.price;
+            
+            // Add to user products
+            const product = {
+                id: Date.now(),
+                name: currentProduct.name,
+                price: currentProduct.price,
+                dailyIncome: currentProduct.dailyIncome,
+                duration: currentProduct.duration,
+                daysCompleted: 0,
+                lastPayout: new Date().toISOString()
+            };
+            
+            userProducts.push(product);
+            investmentCount++;
+            
+            // Add transaction
+            addTransaction('investment', currentProduct.price, `${currentProduct.name} Purchase`);
+            
+            // Update UI
+            updateBalances();
+            updateFinancialStats();
+            renderUserProducts();
+            renderFinancialProducts();
+            
+            // Show success message
+            showNotification(`${currentProduct.name} purchased successfully!`);
+            
+            // Close confirmation modal
+            confirmationModal.classList.remove('active');
         });
         
         // Cancel purchase
-        cancelPurchaseBtn.addEventListener('click', () => {
+        cancelPurchaseBtn.addEventListener('click', function() {
             confirmationModal.classList.remove('active');
-            currentProduct = null;
-            currentPrice = 0;
-            currentDailyIncome = 0;
         });
         
-        closeConfirmation.addEventListener('click', () => {
+        closeConfirmation.addEventListener('click', function() {
             confirmationModal.classList.remove('active');
-            currentProduct = null;
-            currentPrice = 0;
-            currentDailyIncome = 0;
         });
         
-        // Initialize balances and update countdowns every minute
-        updateBalances();
-        updateFinancialStats();
+        // Tab navigation
+        homeTab.addEventListener('click', function() {
+            setActiveTab(this);
+            showHomeSection();
+        });
+        
+        productsTab.addEventListener('click', function() {
+            setActiveTab(this);
+            showProductsSection();
+        });
+        
+        financialTab.addEventListener('click', function() {
+            setActiveTab(this);
+            showFinancialSection();
+        });
+        
+        teamTab.addEventListener('click', function() {
+            setActiveTab(this);
+            showTeamSection();
+        });
+        
+        // Set active tab
+        function setActiveTab(activeTab) {
+            document.querySelectorAll('.nav-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            activeTab.classList.add('active');
+        }
+        
+        // Show home section
+        function showHomeSection() {
+            myProductsSection.style.display = 'block';
+            productsGrid.style.display = 'grid';
+            sectionHeader.style.display = 'flex';
+            financialSection.style.display = 'none';
+            teamSection.style.display = 'none';
+            transactionSection.style.display = 'none';
+        }
+        
+        // Show products section
+        function showProductsSection() {
+            myProductsSection.style.display = 'none';
+            productsGrid.style.display = 'grid';
+            sectionHeader.style.display = 'flex';
+            financialSection.style.display = 'none';
+            teamSection.style.display = 'none';
+            transactionSection.style.display = 'none';
+        }
+        
+        // Show financial section
+        function showFinancialSection() {
+            myProductsSection.style.display = 'none';
+            productsGrid.style.display = 'none';
+            sectionHeader.style.display = 'none';
+            financialSection.style.display = 'block';
+            teamSection.style.display = 'none';
+            transactionSection.style.display = 'none';
+            
+            // Update financial products list
+            renderFinancialProducts();
+        }
+        
+        // Show team section
+        function showTeamSection() {
+            myProductsSection.style.display = 'none';
+            productsGrid.style.display = 'none';
+            sectionHeader.style.display = 'none';
+            financialSection.style.display = 'none';
+            teamSection.style.display = 'block';
+            transactionSection.style.display = 'none';
+        }
+        
+        // Show transaction section
+        function showTransactionSection() {
+            myProductsSection.style.display = 'none';
+            productsGrid.style.display = 'none';
+            sectionHeader.style.display = 'none';
+            financialSection.style.display = 'none';
+            teamSection.style.display = 'none';
+            transactionSection.style.display = 'block';
+        }
+        
+        // Financial section buttons
+        financialRechargeBtn.addEventListener('click', () => {
+            bankModal.classList.add('active');
+        });
+        
+        financialWithdrawBtn.addEventListener('click', () => {
+            withdrawModal.classList.add('active');
+        });
+        
+        financialDetailsBtn.addEventListener('click', () => {
+            showTransactionSection();
+        });
+        
+        // Transaction tabs
+        transactionTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Set active tab
+                transactionTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter transactions
+                const filter = this.getAttribute('data-type');
+                renderTransactions(filter);
+            });
+        });
+        
+        // Initialize the app with some sample data
+        function initializeApp() {
+            // Add some sample transactions
+            addTransaction('deposit', 200, 'Initial Deposit');
+            addTransaction('bonus', 100, 'Welcome Bonus');
+            
+            // Add a sample product if none exists
+            if (userProducts.length === 0) {
+                userProducts.push({
+                    id: 1,
+                    name: 'WHOP1',
+                    price: 300,
+                    dailyIncome: 50,
+                    duration: 66,
+                    daysCompleted: 5,
+                    lastPayout: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString() // 12 hours ago
+                });
+            }
+            
+            // Set initial balances
+            rechargeBalance = 300;
+            incomeBalance = 250;
+            accumulatedIncome = 250;
+            todayIncome = 50;
+            
+            // Set team stats
+            directReferrals = 3;
+            teamSize = 12;
+            teamEarnings = 150;
+            
+            // Update UI
+            updateBalances();
+            updateFinancialStats();
+            updateTeamStats();
+            renderUserProducts();
+            renderFinancialProducts();
+            renderTransactions();
+            
+            // Show home section by default
+            showHomeSection();
+        }
+        
+        // Initialize the app when dashboard loads
+        if (dashboardContainer.style.display === 'block') {
+            initializeApp();
+        }
+        
+        // Update countdowns every minute
         setInterval(updateCountdowns, 60000);
+        
+        // Check invitation code on page load
+        checkInvitationCode();
     </script>
 </body>
 </html>
