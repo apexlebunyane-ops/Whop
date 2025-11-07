@@ -3387,6 +3387,22 @@
             authContainer.style.display = 'none';
             dashboardContainer.style.display = 'block';
             updateSessionStatus(true, phone);
+            
+            // Load user data
+            const currentUser = JSON.parse(sessionStorage.getItem(CURRENT_USER_KEY));
+            if (currentUser) {
+                rechargeBalance = currentUser.rechargeBalance || 0;
+                incomeBalance = currentUser.incomeBalance || 0;
+                totalBalance = currentUser.totalBalance || 0;
+                userProducts = currentUser.products || [];
+                transactions = currentUser.transactions || [];
+                
+                // Process any missed income for each product
+                userProducts.forEach(product => {
+                    processProductIncome(product);
+                });
+            }
+            
             updateBalances();
             updateFinancialStats();
             renderUserProducts();
@@ -3907,13 +3923,6 @@
             sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
             sessionStorage.setItem(SESSION_EXPIRY_KEY, expiryTime.toString());
             
-            // Load user data
-            rechargeBalance = user.rechargeBalance || 0;
-            incomeBalance = user.incomeBalance || 0;
-            totalBalance = user.totalBalance || 0;
-            userProducts = user.products || [];
-            transactions = user.transactions || [];
-            
             // Show dashboard
             showDashboard(user.phone);
             
@@ -4199,25 +4208,75 @@
             });
         }
         
+        // Process product income (for missed payouts when user logs in)
+        function processProductIncome(product) {
+            const now = new Date();
+            const lastPayout = new Date(product.lastPayout);
+            const timeDiff = now - lastPayout;
+            const hoursDiff = timeDiff / (1000 * 60 * 60);
+
+            // If more than 24 hours have passed, then we have missed payouts
+            const missedPayouts = Math.floor(hoursDiff / 24);
+
+            // We can only have up to the remaining days in the product
+            const remainingDays = product.duration - product.daysCompleted;
+            const payoutsToAdd = Math.min(missedPayouts, remainingDays);
+
+            if (payoutsToAdd > 0) {
+                // Add the income for the missed payouts
+                const incomeToAdd = product.dailyIncome * payoutsToAdd;
+                incomeBalance += incomeToAdd;
+                accumulatedIncome += incomeToAdd;
+                todayIncome += incomeToAdd;
+
+                // Update the product
+                product.daysCompleted += payoutsToAdd;
+                // Set the last payout to the time of the last missed payout (which is lastPayout + payoutsToAdd * 24 hours)
+                product.lastPayout = new Date(lastPayout.getTime() + payoutsToAdd * 24 * 60 * 60 * 1000).toISOString();
+
+                // Add transaction for the total missed income
+                addTransaction('income', incomeToAdd, `${product.name} Income (${payoutsToAdd} days)`);
+
+                // Update the UI and user data
+                updateBalances();
+                updateFinancialStats();
+                updateUserData();
+
+                // Show a message
+                showToast(`Added ${payoutsToAdd} days of income for ${product.name}`, incomeToAdd);
+            }
+
+            // If the product is now complete, remove it
+            if (product.daysCompleted >= product.duration) {
+                userProducts = userProducts.filter(p => p.id !== product.id);
+                renderUserProducts();
+                renderFinancialProducts();
+                showToast(`${product.name} investment completed!`, 0, 'success');
+                return payoutsToAdd;
+            }
+
+            return payoutsToAdd;
+        }
+        
         // Render user's products
         function renderUserProducts() {
             if (userProducts.length === 0) {
                 myProductsList.innerHTML = '<div class="no-products">No content yet!</div>';
                 return;
             }
-            
+
             myProductsList.innerHTML = '';
-            
+
             userProducts.forEach(product => {
                 const now = new Date();
                 const lastPayout = new Date(product.lastPayout);
                 const nextPayout = new Date(lastPayout.getTime() + 24 * 60 * 60 * 1000);
                 const timeLeft = nextPayout - now;
-                
+
                 // Calculate hours and minutes remaining
                 const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
                 const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                
+
                 // Format countdown display
                 let countdownText = '';
                 if (timeLeft > 0) {
@@ -4225,9 +4284,9 @@
                 } else {
                     countdownText = 'Ready to claim!';
                 }
-                
+
                 const daysLeft = Math.max(0, product.duration - product.daysCompleted);
-                
+
                 const productEl = document.createElement('div');
                 productEl.className = 'my-product-item';
                 productEl.innerHTML = `
@@ -4254,16 +4313,14 @@
                         </div>
                     </div>
                 `;
-                
-                // Add click handler to claim income when ready
-                if (timeLeft <= 0) {
-                    productEl.style.cursor = 'pointer';
-                    productEl.addEventListener('click', () => claimIncome(product.id));
-                }
-                
+
+                // Always make the product clickable to claim any missed income
+                productEl.style.cursor = 'pointer';
+                productEl.addEventListener('click', () => claimIncome(product.id));
+
                 myProductsList.appendChild(productEl);
             });
-            
+
             // Start countdown timers
             updateCountdowns();
         }
@@ -4342,41 +4399,16 @@
         function claimIncome(productId) {
             const product = userProducts.find(p => p.id === productId);
             if (!product) return;
-            
-            const now = new Date();
-            const lastPayout = new Date(product.lastPayout);
-            const nextPayout = new Date(lastPayout.getTime() + 24 * 60 * 60 * 1000);
-            
-            if (now >= nextPayout) {
-                // Add income to balance
-                incomeBalance += product.dailyIncome;
-                accumulatedIncome += product.dailyIncome;
-                todayIncome += product.dailyIncome;
-                product.daysCompleted++;
-                product.lastPayout = new Date().toISOString();
-                
-                // Add transaction
-                addTransaction('income', product.dailyIncome, `${product.name} Daily Income`);
-                
-                // Update UI
-                updateBalances();
-                updateFinancialStats();
-                renderUserProducts();
-                
-                // Show success message
-                showToast(`Income claimed for ${product.name}`, product.dailyIncome);
-                
-                // If product duration is complete, remove it
-                if (product.daysCompleted >= product.duration) {
-                    userProducts = userProducts.filter(p => p.id !== productId);
-                    renderUserProducts();
-                    renderFinancialProducts();
-                    showToast(`${product.name} investment completed!`, 0, 'success');
-                }
-                
-                // Update user data
-                updateUserData();
+
+            const payoutsToAdd = processProductIncome(product);
+
+            // If there were no payouts to add, then the product is not ready yet
+            if (payoutsToAdd === 0) {
+                showToast(`No income available for ${product.name} yet.`, 0, 'info');
             }
+
+            // Re-render the products to update the countdown
+            renderUserProducts();
         }
         
         // Toggle profile menu
