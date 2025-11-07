@@ -506,6 +506,147 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
         }
         
+        /* AI Chatbot Button */
+        .ai-chatbot-button {
+            position: fixed;
+            bottom: 160px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(67, 97, 238, 0.5);
+            z-index: 100;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .ai-chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(67, 97, 238, 0.7);
+        }
+        
+        /* AI Chatbot Modal */
+        .ai-chatbot-modal {
+            position: fixed;
+            bottom: 100px;
+            right: 100px;
+            width: 350px;
+            height: 500px;
+            background: var(--glass);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+        }
+        
+        .ai-chatbot-modal.active {
+            display: flex;
+        }
+        
+        .ai-chatbot-header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .ai-chatbot-header h3 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ai-chatbot-header h3 i {
+            font-size: 20px;
+        }
+        
+        .close-chatbot {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .ai-chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .ai-message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .ai-bot-message {
+            align-self: flex-start;
+            background: rgba(67, 97, 238, 0.2);
+            border: 1px solid rgba(67, 97, 238, 0.3);
+        }
+        
+        .ai-user-message {
+            align-self: flex-end;
+            background: rgba(76, 201, 240, 0.2);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+        }
+        
+        .ai-chatbot-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid var(--card-border);
+        }
+        
+        .ai-chatbot-input input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .ai-chatbot-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .ai-chatbot-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .ai-chatbot-input button:hover {
+            background: var(--primary-dark);
+        }
+        
         /* Session status indicator */
         .session-status {
             position: fixed;
@@ -2280,6 +2421,12 @@
             .invite-link-container {
                 flex-direction: column;
             }
+            
+            .ai-chatbot-modal {
+                width: 90%;
+                right: 5%;
+                bottom: 80px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -2303,6 +2450,11 @@
             .auth-container {
                 margin: 10px;
             }
+            
+            .ai-chatbot-modal {
+                width: 95%;
+                right: 2.5%;
+            }
         }
     </style>
 </head>
@@ -2322,6 +2474,29 @@
         <i class="fas fa-check-circle"></i>
         <div class="notification-content" id="notification-content">Success message</div>
         <button class="close-notification" id="close-notification">&times;</button>
+    </div>
+    
+    <!-- AI Chatbot -->
+    <div class="ai-chatbot-button" id="ai-chatbot-button">
+        <i class="fas fa-robot"></i>
+    </div>
+    
+    <div class="ai-chatbot-modal" id="ai-chatbot-modal">
+        <div class="ai-chatbot-header">
+            <h3><i class="fas fa-robot"></i> WHOP AI Assistant</h3>
+            <button class="close-chatbot" id="close-chatbot">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ai-chatbot-messages" id="ai-chatbot-messages">
+            <div class="ai-message ai-bot-message">
+                <p>Hello! I'm your AI assistant. How can I help you today? You can ask me about withdrawals, deposits, investments, bonuses, and more.</p>
+            </div>
+        </div>
+        <div class="ai-chatbot-input">
+            <input type="text" id="ai-chatbot-input" placeholder="Type your question here...">
+            <button id="send-ai-message"><i class="fas fa-paper-plane"></i></button>
+        </div>
     </div>
     
     <!-- Auth Container -->
@@ -3181,6 +3356,14 @@
         const dashboardContainer = document.getElementById('dashboard-container');
         const logoutBtn = document.getElementById('logout-btn');
         
+        // AI Chatbot elements
+        const aiChatbotButton = document.getElementById('ai-chatbot-button');
+        const aiChatbotModal = document.getElementById('ai-chatbot-modal');
+        const closeChatbot = document.getElementById('close-chatbot');
+        const aiChatbotMessages = document.getElementById('ai-chatbot-messages');
+        const aiChatbotInput = document.getElementById('ai-chatbot-input');
+        const sendAiMessage = document.getElementById('send-ai-message');
+        
         // Check if user is already logged in
         function checkExistingSession() {
             const currentUser = JSON.parse(sessionStorage.getItem(CURRENT_USER_KEY));
@@ -3209,6 +3392,9 @@
             renderUserProducts();
             renderTransactions();
             updateTeamStats();
+            
+            // Show login notification
+            showNotification('NOTE: THAT THE PACKAGE IS NOT SAME DAY EARNING. YOU INVEST TODAY YOU WILL RECEIVE DAILY INCOME TOMORROW.', 'info');
             
             // Check for invitation code in URL
             checkInvitationCode();
@@ -3577,6 +3763,11 @@
                 if (invitationInput && !sessionStorage.getItem(CURRENT_USER_KEY)) {
                     invitationInput.value = refCode;
                 }
+                
+                // If user is logged in, show notification
+                if (sessionStorage.getItem(CURRENT_USER_KEY)) {
+                    showNotification(`You joined using invitation code: ${refCode}`);
+                }
             }
         }
         
@@ -3646,9 +3837,13 @@
                 invitationCode: invitationCode || null,
                 memberId: memberId,
                 inviteCode: inviteCode,
+                products: [],
                 transactions: [],
                 referredUsers: [],
-                joinDate: new Date().toLocaleDateString('en-ZA')
+                joinDate: new Date().toLocaleDateString('en-ZA'),
+                rechargeBalance: 0,
+                incomeBalance: 0,
+                totalBalance: 0
             };
             
             // Add to users array
@@ -3711,6 +3906,13 @@
             const expiryTime = new Date().getTime() + (24 * 60 * 60 * 1000); // 24 hours
             sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
             sessionStorage.setItem(SESSION_EXPIRY_KEY, expiryTime.toString());
+            
+            // Load user data
+            rechargeBalance = user.rechargeBalance || 0;
+            incomeBalance = user.incomeBalance || 0;
+            totalBalance = user.totalBalance || 0;
+            userProducts = user.products || [];
+            transactions = user.transactions || [];
             
             // Show dashboard
             showDashboard(user.phone);
@@ -3809,6 +4011,9 @@
             if (type === 'error') {
                 notification.classList.add('error');
                 icon.className = 'fas fa-exclamation-circle';
+            } else if (type === 'info') {
+                notification.classList.remove('error');
+                icon.className = 'fas fa-info-circle';
             } else {
                 notification.classList.remove('error');
                 icon.className = 'fas fa-check-circle';
@@ -3861,6 +4066,9 @@
         const boundBankDetails = document.getElementById('bound-bank-details');
         const bindBtn = document.getElementById('bind-btn');
         const withdrawAmountSection = document.getElementById('withdraw-amount-section');
+        const withdrawAmountInput = document.getElementById('withdraw-amount');
+        const withdrawError = document.getElementById('withdraw-error');
+        const withdrawProceedBtn = document.getElementById('withdraw-proceed-btn');
         const userName = document.getElementById('user-name');
         const confirmationModal = document.getElementById('confirmation-modal');
         const closeConfirmation = document.getElementById('close-confirmation');
@@ -3900,6 +4108,32 @@
             balanceAmount.textContent = `R ${totalBalance.toFixed(2)}`;
             rechargeFund.textContent = `R ${rechargeBalance.toFixed(2)}`;
             incomeFund.textContent = `R ${incomeBalance.toFixed(2)}`;
+            
+            // Update user data in localStorage
+            updateUserData();
+        }
+        
+        // Update user data in localStorage
+        function updateUserData() {
+            const currentUser = JSON.parse(sessionStorage.getItem(CURRENT_USER_KEY));
+            if (currentUser) {
+                // Find the user in the users array
+                const userIndex = users.findIndex(u => u.phone === currentUser.phone);
+                if (userIndex !== -1) {
+                    // Update the user's data
+                    users[userIndex].rechargeBalance = rechargeBalance;
+                    users[userIndex].incomeBalance = incomeBalance;
+                    users[userIndex].totalBalance = totalBalance;
+                    users[userIndex].products = userProducts;
+                    users[userIndex].transactions = transactions;
+                    
+                    // Save to localStorage
+                    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
+                    
+                    // Update session storage
+                    sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(users[userIndex]));
+                }
+            }
         }
         
         // Update financial stats
@@ -3928,6 +4162,7 @@
             
             transactions.unshift(transaction);
             renderTransactions();
+            updateUserData();
         }
         
         // Render transactions
@@ -4044,6 +4279,7 @@
             
             userProducts.forEach(product => {
                 const earned = product.dailyIncome * product.daysCompleted;
+                const remainingDays = product.duration - product.daysCompleted;
                 
                 const productEl = document.createElement('div');
                 productEl.className = 'financial-product';
@@ -4052,7 +4288,7 @@
                     <div class="financial-product-details">
                         <div class="financial-detail">
                             <div class="financial-detail-label">Earnings duration:</div>
-                            <div class="financial-detail-value">${product.duration - product.daysCompleted}d ${Math.floor(Math.random() * 24)}h</div>
+                            <div class="financial-detail-value">${remainingDays}d ${Math.floor(Math.random() * 24)}h</div>
                         </div>
                         <div class="financial-detail">
                             <div class="financial-detail-label">Daily income:</div>
@@ -4137,6 +4373,9 @@
                     renderFinancialProducts();
                     showToast(`${product.name} investment completed!`, 0, 'success');
                 }
+                
+                // Update user data
+                updateUserData();
             }
         }
         
@@ -4274,6 +4513,26 @@
             }
         });
 
+        // Validate withdraw amount
+        withdrawAmountInput.addEventListener('input', function() {
+            const amount = parseFloat(this.value);
+            
+            if (amount >= 50 && amount <= incomeBalance) {
+                withdrawError.style.display = 'none';
+            } else {
+                if (this.value !== '') {
+                    if (amount < 50) {
+                        withdrawError.textContent = 'Minimum withdrawal is R50';
+                    } else {
+                        withdrawError.textContent = 'Insufficient balance for withdrawal';
+                    }
+                    withdrawError.style.display = 'block';
+                } else {
+                    withdrawError.style.display = 'none';
+                }
+            }
+        });
+
         // Proceed to payment confirmation
         proceedBtn.addEventListener('click', function() {
             paymentConfirmation.style.display = 'block';
@@ -4387,6 +4646,54 @@
             document.getElementById('bound-account').textContent = account;
             
             showNotification('Bank account bound successfully!');
+        });
+        
+        // Handle withdrawal
+        withdrawProceedBtn.addEventListener('click', function() {
+            const amount = parseFloat(withdrawAmountInput.value);
+            
+            if (isNaN(amount) || amount < 50) {
+                showNotification('Minimum withdrawal is R50', 'error');
+                return;
+            }
+            
+            if (amount > incomeBalance) {
+                showNotification('Insufficient balance for withdrawal', 'error');
+                return;
+            }
+            
+            if (!bankBound) {
+                showNotification('Please bind your bank account first', 'error');
+                return;
+            }
+            
+            // Create WhatsApp message
+            const user = JSON.parse(sessionStorage.getItem(CURRENT_USER_KEY));
+            const message = `Withdrawal Request:%0A%0A` +
+                           `Member ID: ${user.memberId}%0A` +
+                           `Name: ${bankDetails.name}%0A` +
+                           `Bank: ${bankDetails.bank}%0A` +
+                           `Account Number: ${bankDetails.account}%0A` +
+                           `Amount: R${amount.toFixed(2)}%0A` +
+                           `Date: ${new Date().toLocaleString('en-ZA')}`;
+            
+            // Open WhatsApp with pre-filled message
+            window.open(`https://wa.me/27631287462?text=${message}`, '_blank');
+            
+            // Deduct from income balance
+            incomeBalance -= amount;
+            
+            // Add transaction
+            addTransaction('withdrawal', amount, 'Withdrawal Request');
+            
+            // Update UI
+            updateBalances();
+            
+            // Close modal
+            withdrawModal.classList.remove('active');
+            
+            // Show success message
+            showNotification('Withdrawal request sent via WhatsApp. We will process it within 24 hours.');
         });
         
         // Editable name
@@ -4592,6 +4899,74 @@
                 const filter = this.getAttribute('data-type');
                 renderTransactions(filter);
             });
+        });
+        
+        // AI Chatbot functionality
+        aiChatbotButton.addEventListener('click', function() {
+            aiChatbotModal.classList.add('active');
+            aiChatbotInput.focus();
+        });
+        
+        closeChatbot.addEventListener('click', function() {
+            aiChatbotModal.classList.remove('active');
+        });
+        
+        // Send AI message
+        function sendAiChatbotMessage() {
+            const message = aiChatbotInput.value.trim();
+            if (message === '') return;
+            
+            // Add user message
+            addAiMessage(message, 'user');
+            aiChatbotInput.value = '';
+            
+            // Generate AI response
+            setTimeout(() => {
+                const response = generateAiResponse(message);
+                addAiMessage(response, 'bot');
+            }, 1000);
+        }
+        
+        // Add message to AI chat
+        function addAiMessage(text, sender) {
+            const messageEl = document.createElement('div');
+            messageEl.className = `ai-message ai-${sender}-message`;
+            messageEl.innerHTML = `<p>${text}</p>`;
+            aiChatbotMessages.appendChild(messageEl);
+            aiChatbotMessages.scrollTop = aiChatbotMessages.scrollHeight;
+        }
+        
+        // Generate AI response
+        function generateAiResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('withdraw') || lowerMessage.includes('withdrawal')) {
+                return "To withdraw funds, you need to have a minimum of R50 in your income balance. Go to the 'Withdraw' section, enter the amount, and you'll be redirected to WhatsApp to confirm your withdrawal details. Withdrawals are processed within 24 hours.";
+            } else if (lowerMessage.includes('deposit') || lowerMessage.includes('recharge')) {
+                return "You can deposit funds by clicking the 'Recharge' button. The minimum deposit is R200. You'll get a R100 bonus when you deposit R200 or more. Follow the bank details provided and make a payment with the reference code.";
+            } else if (lowerMessage.includes('investment') || lowerMessage.includes('package')) {
+                return "We offer four investment packages: WHOP1 (R300), WHOP2 (R600), WHOP3 (R1200), and WHOP4 (R3000). Each package earns daily income for 66 days. Note: The package is not same-day earning. You invest today and you will receive daily income tomorrow.";
+            } else if (lowerMessage.includes('bonus')) {
+                return "We offer a R100 bonus when you deposit R200 or more. Also, you can earn referral bonuses by inviting friends: 30% for direct referrals, 8% for level 2, and 1% for level 3.";
+            } else if (lowerMessage.includes('referral') || lowerMessage.includes('invite')) {
+                return "You can invite friends using your unique invite code or link in the 'Team' section. You'll earn 30% commission on your direct referrals' investments, 8% on level 2, and 1% on level 3.";
+            } else if (lowerMessage.includes('income') || lowerMessage.includes('earning')) {
+                return "Your daily income is automatically calculated and added to your income balance every 24 hours. You can claim it by clicking on the product in 'My Products' when the countdown ends.";
+            } else if (lowerMessage.includes('product') || lowerMessage.includes('package')) {
+                return "We offer four investment packages with different price points and daily returns. All packages have a 66-day earning period. Check the 'Products' section for details.";
+            } else if (lowerMessage.includes('help')) {
+                return "I can help you with information about withdrawals, deposits, investments, bonuses, referrals, and more. Just ask your question!";
+            } else {
+                return "I'm sorry, I didn't understand that. You can ask me about withdrawals, deposits, investments, bonuses, or referrals.";
+            }
+        }
+        
+        // Event listeners for AI chatbot
+        sendAiMessage.addEventListener('click', sendAiChatbotMessage);
+        aiChatbotInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendAiChatbotMessage();
+            }
         });
         
         // Initialize the app with some sample data
